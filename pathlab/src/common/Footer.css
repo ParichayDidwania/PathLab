@@ -1,0 +1,12 @@
+.footer__list {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+
+    padding: 1rem;
+
+    background-color: #ffcc29;
+
+    list-style-type: none;
+    font-size: 0.75rem;
+}

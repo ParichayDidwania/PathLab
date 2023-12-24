@@ -1,0 +1,22 @@
+.page {
+  display: grid;
+  grid-template-areas: 
+    "header"
+    "main"
+    "footer";
+  grid-template-rows: auto 1fr auto;
+
+  height: 100%;
+}
+
+.page__header {
+  grid-area: header;
+}
+
+.page__main {
+  grid-area: main;
+}
+
+.page__footer {
+  grid-area: footer;
+}
