@@ -1,0 +1,52 @@
+.auth-main {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: start;
+}
+
+.login-form, .signup-form {
+    display: flex;
+    flex-direction: column;
+
+    margin-top: 2rem;
+    padding: 2rem;
+
+    background-color: #f5f5f5;
+}
+
+.login-form__heading, .signup-form__heading {
+    margin-bottom: 1rem;
+
+    text-align: center;
+}
+
+.login-form__input, .signup-form__input {
+    margin-bottom: 1rem;
+}
+
+.login-form__submit-button, .signup-form__submit-button {
+    background-color: #ffcc29;
+
+    font-weight: bold;
+}
+
+.login-form__submit-button:hover, .signup-form__submit-button:hover {
+    background-color: #d1a61a;
+}
+
+.login-form__signup-button, .signup-form__login-button {
+    margin-top: 0.5rem;
+    border: none;
+
+    background: none;
+
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.login-form__error-span, .signup-form--required, .signup-form__error-span {
+    color: red;
+
+    text-align: center;
+}
