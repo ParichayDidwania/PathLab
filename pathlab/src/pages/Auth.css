@@ -50,3 +50,9 @@
 
     text-align: center;
 }
+
+.signup-form__instruction-span {
+    color: green;
+
+    text-align: center;
+}

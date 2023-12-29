@@ -27,3 +27,17 @@
     height: 1.5rem;
     width: 1.5rem;
 }
+
+.profile-button {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+
+    border: none;
+
+    color: black;
+    background: none;
+
+    text-decoration: none;
+    cursor: pointer;
+}
