@@ -26,6 +26,7 @@ function Activate({ className }) {
             return;
         }
         activateAccount();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         isCalled = true;
     }, [])
 
