@@ -1,6 +1,6 @@
 .footer__list {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: space-around;
 
     padding: 1rem;
@@ -9,4 +9,10 @@
 
     list-style-type: none;
     font-size: 0.75rem;
+}
+
+@media(min-width: 40rem) {
+    .footer__list {
+        flex-direction: row;
+    }
 }

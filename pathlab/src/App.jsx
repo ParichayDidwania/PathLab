@@ -2,9 +2,9 @@ import './App.css'
 import Footer from './common/Footer';
 import Header from './common/Header';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-// import Home from './pages/Home';
+import Home from './pages/Home';
 import Auth from './pages/Auth';
-import Upload from './components/Upload';
+// import Upload from './components/Upload';
 import Activate from './pages/Activate';
 import { useEffect, useState } from 'react';
 import CookieHelper from './helpers/cookieHelper';
@@ -43,9 +43,9 @@ function App() {
   return(
       <BrowserRouter>
         <div className="page">
-          <Header className="page__header" name={name} isLoggedIn={isLoggedIn}/>
+          <Header className="page__header" name={name} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>
             <Routes>
-              <Route path='/' element={<Upload className="page__main"/>}></Route>
+              <Route path='/' element={<Home className="page__main"/>}></Route>
               <Route path='/auth' element={!isLoggedIn ? <Auth className="page__main" setName={setName}/> : <Navigate replace to="/" />}></Route>
               <Route path='/activate/:id' element={<Activate className="page__main"/>}></Route>
               <Route path='/*' element={<Navigate replace to="/" />}></Route>

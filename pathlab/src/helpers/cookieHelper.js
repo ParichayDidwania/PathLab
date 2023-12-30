@@ -14,6 +14,10 @@ class CookieHelper {
     static get(key) {
         return CookieHelper.__cookies.get(key);
     }
+
+    static remove(key) {
+        CookieHelper.__cookies.remove(key, { path: '/' });
+    }
 }
 
 export default CookieHelper;
