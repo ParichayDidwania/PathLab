@@ -11,6 +11,7 @@ function Navbar({ className }) {
             </button>
             <ul className="nav__list">
                 <li className="nav__item"><Link className={`nav__link ${location.pathname === '/' && "nav__link--opened"}`} to="/">Tests</Link></li>
+                <li className="nav__item"><Link className={`nav__link ${location.pathname === '/cart' && "nav__link--opened"}`} to="/cart">Cart</Link></li>
                 <li className="nav__item"><Link className={`nav__link ${location.pathname === '/about' && "nav__link--opened"}`} to="/about">About Us</Link></li>
                 <li className="nav__item"><Link className={`nav__link ${location.pathname === '/get-in-touch' && "nav__link--opened"}`} to="/get-in-touch">Get In Touch</Link></li>
             </ul>

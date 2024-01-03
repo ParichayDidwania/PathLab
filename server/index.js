@@ -14,10 +14,13 @@ app.use(express.json());
 const home = require('./routes/home');
 const file = require('./routes/file');
 const auth = require('./routes/auth');
+const cart = require('./routes/cart');
+const ProductCatalogue = require("./helpers/productCatalogue");
 
 async function start() {
     connectDB();
     AdminMailer.init();
+    ProductCatalogue.init();
     app.use(cors({
         origin:  "*"
     }))
@@ -25,6 +28,7 @@ async function start() {
     app.use('/', home);
     app.use('/file', upload.single("file"), file);
     app.use('/auth', auth);
+    app.use('/cart', cart);
     
     app.listen(port);
 } 

@@ -1,0 +1,40 @@
+.details-main {
+    display: flex;
+    flex-direction: column;
+
+    padding: 1rem;
+}
+
+.patient-details {
+    display: flex;
+    flex-direction: column;
+
+    border: 2px solid #f5f5f5;
+}
+
+.patient-details__info {
+    display: flex;
+    flex-direction: column;
+
+    margin-bottom: 1rem;
+    padding: 1rem;
+
+    background-color: #f5f5f5;
+}
+
+.patient-details__error {
+    color: red;
+}
+
+.patient-details__add {
+    align-self: center;
+
+    border-radius: 50px;
+    margin: 0.25rem;
+    border: none;
+    padding: 0.5rem;
+
+    background-color: #ffcc29;
+
+    font-weight: bold;
+}

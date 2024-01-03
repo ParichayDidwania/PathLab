@@ -51,7 +51,7 @@
     text-align: center;
 }
 
-.signup-form__instruction-span {
+.signup-form__instruction-span, .login-form__instruction-span {
     color: green;
 
     text-align: center;

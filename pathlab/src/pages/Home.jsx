@@ -1,19 +1,19 @@
 import { useEffect, useId, useState } from "react";
 import "./Home.css";
-import { Link } from "react-router-dom";
+import Card from "../components/Card";
 
-function Home({ className }) {
+function Home({ className, cart, setCart, products }) {
 
     const [testArray, setTestArray] = useState([]);
     const id = useId();
 
-    function trimDescription(description) {
-        if(description.length > 200) {
-            return (description.slice(0, 200) + "...");
-        } else {
-            return description;
-        }
-    }
+    // function trimDescription(description) {
+    //     if(description.length > 200) {
+    //         return (description.slice(0, 200) + "...");
+    //     } else {
+    //         return description;
+    //     }
+    // }
 
     useEffect(() => {
         async function fetchHomeData() {
@@ -21,25 +21,20 @@ function Home({ className }) {
             const data = await response.json();
 
             let key = 0;
-            const tempTestArray = data.data.map(test => {
+            const tempTestArray = data.data.map(testId => {
                 key ++;
                 return(
-                    <div className="card" key={`card-${id}-${key}`}>
-                        <h2 className="card__title">{test.title}</h2>
-                        <p className="card__description">{trimDescription(test.description)}</p>
-                        <span className="card__price">&#8377; {test.price}</span>
-                        <Link className="card__link" to={`/test/${test.id}`}>SEE MORE</Link>
-                    </div>
+                    <Card className="home-card" cart={cart} setCart={setCart} testId={testId} key={`${key}-${id}`} products={products}/>
                 )
             })
             setTestArray(tempTestArray);
-            console.log(data);
         }
         fetchHomeData();
-    }, [id])
+    }, [id, cart, setCart, products])
 
     return(
         <main className={`home-main ${className}`}>
+            <h2 className="home-main__heading">Tests</h2>
             <form className="search-form">
                 <input className="search-form__input" placeholder="Search for a test..."></input>
                 <button className="search-form__submit-button" type="submit">&#x1F50E;&#xFE0E;</button>

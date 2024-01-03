@@ -1,12 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./Auth.css";
 
 import bcrypt from 'bcryptjs';
 import CookieHelper from "../helpers/cookieHelper";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 function Auth({ className, setName }) {
     const navigate = useNavigate();
+    const location = useLocation();
 
     const [authType, setAuthType] = useState(0);
 
@@ -19,7 +20,14 @@ function Auth({ className, setName }) {
 
     const [loginEmail, setLoginEmail] = useState("");
     const [loginPassword, setLoginPassword] = useState("");
+    const [loginInstruction, setLoginInstruction] = useState("");
     const [loginError, setLoginError] = useState("");
+
+    useEffect(() => {
+        if(location.state?.from === "cart") {
+            setLoginInstruction("Login to proceed the payment");
+        }
+    }, [location])
 
     function switchAuthType() {
         if(authType === 0) {
@@ -129,6 +137,7 @@ function Auth({ className, setName }) {
             <form className="login-form" onSubmit={login}>
                 <h2 className="login-form__heading">LOGIN</h2>
                 <span className="login-form__error-span">{loginError}</span>
+                <span className="login-form__instruction-span">{loginInstruction}</span>
 
                 <label className="login-form__label" htmlFor="email">Email</label>
                 <input className="login-form__input" id="email" name="email" value={loginEmail} onChange={(e) => { setLoginEmail(e.target.value) }}></input>
