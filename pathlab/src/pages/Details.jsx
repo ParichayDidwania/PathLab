@@ -1,6 +1,8 @@
 import { useEffect, useId, useState } from "react";
 import "./Details.css";
 import PatientDetails from "../components/PatientDetails";
+import Appointment from "../components/Appointment";
+import appointmentData from "../helpers/dummyAppointmentData";
 
 function Details({ className, cart }) {
 
@@ -85,6 +87,7 @@ function Details({ className, cart }) {
                 {patientElems}
                 <button className="patient-details__add" onClick={addPatient}>ADD MORE</button>
             </div>
+            <Appointment data={appointmentData}/>
         </main>
     )
 }   

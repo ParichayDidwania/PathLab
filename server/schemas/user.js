@@ -2,12 +2,12 @@ const mongoose = require('mongoose');
 
 const UserSchema = new mongoose.Schema({
     name: { type: String, require: true },
-    email: { type: String, unique: true, require: true },
+    email: { type: String, unique: true, require: true, index: true },
     password: { type: String, require: true },
     activationId: { type: String },
     activated: { type: Boolean, default: false },
     authToken: { type: String }
-})
+}, { timestamps: true })
 
 class UserModelClass {
     static async addUser(userObject, generatedLink) {

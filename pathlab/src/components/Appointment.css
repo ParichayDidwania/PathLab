@@ -1,0 +1,66 @@
+.appointment-div {
+    position: relative;
+
+    display: flex;
+    gap: 0.5rem;
+    align-self: center;
+
+
+    width: 70%;
+}
+
+.carousel {
+    display: flex;
+    gap: 1rem;
+    flex-grow: 1;
+    overflow-x: hidden;
+
+    border: 2px solid black;
+    
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
+}
+
+.carousel__item {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    border: 1px solid black;
+    width: 100%;
+    height: 200px;
+
+    scroll-snap-align: start;
+}
+
+.slots {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+
+    margin-top: 1rem;
+}
+
+.slots__button {
+    grid-column: span 1;
+
+    min-width: fit-content;
+}
+
+.slots__button--selected {
+    background-color: aqua;
+}
+
+.scroll-button {
+    position: absolute;
+}
+
+.btn-1 {
+    top: 5%;
+    right: 10%;
+}
+
+.btn-2 {
+    top: 5%;
+    left: 10%;
+}

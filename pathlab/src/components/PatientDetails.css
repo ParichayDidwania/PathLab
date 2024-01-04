@@ -34,6 +34,7 @@
 .patient-data__label {
     display: flex;
     flex-direction: row;
+    justify-content: start;
     gap: 1rem;
 }
 

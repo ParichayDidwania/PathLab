@@ -80,7 +80,7 @@ function App() {
           {products.length > 0 ? 
             <Routes>
               <Route path='/' element={<Home className="page__main" cart={cart} setCart={setCartWrapper} products={products}/>}></Route>
-              <Route path='/auth' element={!isLoggedIn ? <Auth className="page__main" setName={setName}/> : <Navigate replace to="/" />}></Route>
+              <Route path='/auth' element={!isLoggedIn ? <Auth className="page__main" setName={setName} setIsLoggedIn={setIsLoggedIn}/> : <Navigate replace to="/" />}></Route>
               <Route path='/activate/:id' element={<Activate className="page__main"/>}></Route>
               <Route path='/cart' element={<Cart className="page__main" cart={cart} setCart={setCartWrapper} products={products} isLoggedIn={isLoggedIn}/>}></Route>
               <Route path='/details' element={<Details className="page__main" cart={cart}/>}></Route>

@@ -11,10 +11,13 @@ const upload = multer({ storage: multer.memoryStorage() });
 
 app.use(express.json());
 
+const authMiddleWare = require('./middlewares/authMW');
+
 const home = require('./routes/home');
 const file = require('./routes/file');
 const auth = require('./routes/auth');
 const cart = require('./routes/cart');
+const booking = require('./routes/booking');
 const ProductCatalogue = require("./helpers/productCatalogue");
 
 async function start() {
@@ -29,6 +32,7 @@ async function start() {
     app.use('/file', upload.single("file"), file);
     app.use('/auth', auth);
     app.use('/cart', cart);
+    app.use('/booking', authMiddleWare, booking);
     
     app.listen(port);
 } 
