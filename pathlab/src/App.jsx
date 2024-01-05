@@ -18,6 +18,7 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [cart, setCart] = useState({});
   const [products, setProducts] = useState([]);
+  const [authToken, setAuthToken] = useState("");
 
   function setCartWrapper(cartObject) {
     CookieHelper.set("cart", cartObject);
@@ -40,6 +41,7 @@ function App() {
           res = await res.json();
           setName(res.data.name);
           setIsLoggedIn(true);
+          setAuthToken(authToken);
         }
       }
     }
@@ -83,7 +85,7 @@ function App() {
               <Route path='/auth' element={!isLoggedIn ? <Auth className="page__main" setName={setName} setIsLoggedIn={setIsLoggedIn}/> : <Navigate replace to="/" />}></Route>
               <Route path='/activate/:id' element={<Activate className="page__main"/>}></Route>
               <Route path='/cart' element={<Cart className="page__main" cart={cart} setCart={setCartWrapper} products={products} isLoggedIn={isLoggedIn}/>}></Route>
-              <Route path='/details' element={<Details className="page__main" cart={cart}/>}></Route>
+              <Route path='/details' element={<Details className="page__main" cart={cart} authToken={authToken}/>}></Route>
               <Route path='/*' element={<Navigate replace to="/" />}></Route>
             </Routes>
             :

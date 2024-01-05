@@ -3,10 +3,6 @@
 
     display: flex;
     gap: 0.5rem;
-    align-self: center;
-
-
-    width: 70%;
 }
 
 .carousel {
@@ -15,8 +11,8 @@
     flex-grow: 1;
     overflow-x: hidden;
 
-    border: 2px solid black;
-    
+    width: 90vw;
+        
     scroll-behavior: smooth;
     scroll-snap-type: x mandatory;
 }
@@ -25,18 +21,21 @@
     flex-shrink: 0;
     display: flex;
     flex-direction: column;
-    align-items: center;
 
-    border: 1px solid black;
+    padding: 1rem;
     width: 100%;
-    height: 200px;
 
     scroll-snap-align: start;
 }
 
+.carousel__item__heading {
+    align-self: center;
+}
+
 .slots {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
 
     margin-top: 1rem;
 }
@@ -44,23 +43,54 @@
 .slots__button {
     grid-column: span 1;
 
-    min-width: fit-content;
+    border: none;
+    border-radius: 10px;
+
+    background-color: #004368;
+    color: white;
+
+    font-weight: bold;
+    white-space: nowrap;
+    cursor: pointer;
 }
 
 .slots__button--selected {
-    background-color: aqua;
+    background-color: #ffcc29;
+    color: #004368;
+}
+
+.slots__button--disabled {
+    background-color: grey;
+    cursor: initial;
 }
 
 .scroll-button {
     position: absolute;
+
+    border: none;
+
+    background: none;
+
+    cursor: pointer;
 }
 
-.btn-1 {
-    top: 5%;
+.arrow-image {
+    height: 2rem;
+    width: 2rem;
+}
+
+.right-scroll-button {
+    top: 3%;
     right: 10%;
 }
 
-.btn-2 {
-    top: 5%;
+.left-scroll-button {
+    top: 3%;
     left: 10%;
+}
+
+@media(min-width: 40rem) {
+    .slots {
+        grid-template-columns: repeat(4, 1fr);
+    }
 }

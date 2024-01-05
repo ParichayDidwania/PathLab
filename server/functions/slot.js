@@ -50,6 +50,17 @@ class SlotFunction {
     static getDayFromCounter(counter) { 
         return moment(CONSTANTS.START_DATE).add(counter, 'd');
     }   
+
+    static formatDate(slotDocs) {
+        const formattedSlotDocs = [];
+        for(const slotDoc of slotDocs) {
+            const formattedSlotDoc = slotDoc.toObject();
+            formattedSlotDoc.onStr =  moment(formattedSlotDoc.on).format("MMMM DD, YYYY");
+            formattedSlotDocs.push(formattedSlotDoc);
+        }
+
+        return formattedSlotDocs
+    }
 }
 
 module.exports = SlotFunction;

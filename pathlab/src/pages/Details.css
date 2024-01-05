@@ -1,18 +1,19 @@
 .details-main {
     display: flex;
     flex-direction: column;
+    gap: 1rem;
 
     padding: 1rem;
 }
 
-.patient-details {
+.patient-details, .appointment-details {
     display: flex;
     flex-direction: column;
 
     border: 2px solid #f5f5f5;
 }
 
-.patient-details__info {
+.patient-details__info, .appointment-details__info {
     display: flex;
     flex-direction: column;
 
@@ -22,7 +23,7 @@
     background-color: #f5f5f5;
 }
 
-.patient-details__error {
+.patient-details__error, .appointment-details__error {
     color: red;
 }
 
@@ -31,10 +32,16 @@
 
     border-radius: 50px;
     margin: 0.25rem;
+    margin-bottom: 0.5rem;
     border: none;
     padding: 0.5rem;
 
     background-color: #ffcc29;
 
     font-weight: bold;
+    cursor: pointer;
+}
+
+.appointment-details__appointment {
+    align-self: center;
 }

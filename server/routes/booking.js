@@ -6,9 +6,10 @@ const router = express.Router();
 
 router.get('/slots', async(req, res) => {
     const slots = await SlotFunction.checkAndCreateSlots();
+    const formattedSlots = SlotFunction.formatDate(slots);
     res.send({ 
         message: "success",
-        data: slots
+        data: formattedSlots
     })
 })
 
