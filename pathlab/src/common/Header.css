@@ -82,7 +82,7 @@
     rotate: x 90deg;
     transform-origin: top;
 
-    z-index: 1;
+    z-index: 2;
 }
 
 .profile:hover .profile__list, .profile:focus-within .profile__list {

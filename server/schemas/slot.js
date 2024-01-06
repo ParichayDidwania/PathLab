@@ -39,8 +39,16 @@ class SlotModelClass {
         return await SlotModel.findOne({ counter: counter, "slots.id": id }, { "slots.$": 1, on: 1 });
     }
 
-    static async bookSlotByCounterAndId(counter, id, order_id) {
-        return await SlotModel.updateOne({ counter: counter, slots: { $elemMatch: { id: id, booked: false, tempBooked: false } } }, { $set: { "slots.$.tempBooked": true, "slots.$.order_id": order_id } })
+    static async bookSlotByCounterAndId(counter, id, order_id, expiresAt) {
+        return await SlotModel.updateOne({ counter: counter, slots: { $elemMatch: { id: id, booked: false, tempBooked: false } } }, { $set: { "slots.$.tempBooked": true, "slots.$.order_id": order_id, "slots.$.expiresAt": expiresAt } })
+    }
+
+    static async clearSlotByCounterAndId(counter, id, exec = false) {
+        if(exec) {
+            return SlotModel.updateOne({ counter: counter, slots: { $elemMatch: { id: id } } }, { $set: { "slots.$.tempBooked": false }, $unset: { "slots.$.order_id": "", "slots.$.expiresAt": "" } }).exec();
+        } else {
+            return await SlotModel.updateOne({ counter: counter, slots: { $elemMatch: { id: id } } }, { $set: { "slots.$.tempBooked": false }, $unset: { "slots.$.order_id": "", "slots.$.expiresAt": "" } });
+        }
     }
 }
 

@@ -26,6 +26,8 @@ class CONSTANTS {
         SAMPLE_COLLECTED: 2,
         COMPLETED: 3
     } 
+
+    static EXPIRATION_WINDOW = 10; // minutes
 }
 
 module.exports = CONSTANTS;

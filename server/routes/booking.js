@@ -3,6 +3,7 @@ const SlotFunction = require("../functions/slot");
 const SlotModel = require("../schemas/slot");
 const OrderModel = require("../schemas/order");
 const router = express.Router();
+const moment = require('moment');
 
 router.get('/slots', async(req, res) => {
     const slots = await SlotFunction.checkAndCreateSlots();
@@ -33,8 +34,8 @@ router.post('/book', async(req, res) => {
     orderData.date = slotDoc.on;
     orderData.time = slotDoc.slots[0].time;
 
-    const order = await OrderModel.createOrder(orderData);
-    const slotBooking = await SlotModel.bookSlotByCounterAndId(counter, id, order._id);
+    const order = await OrderModel.createOrder(orderData, SlotFunction.getCounter());
+    const slotBooking = await SlotModel.bookSlotByCounterAndId(counter, id, order._id, order.expiresAt);
 
     if(slotBooking.modifiedCount == 0) { // for 2 bookings at same time
         await OrderModel.deleteOrder(order._id);

@@ -10,15 +10,20 @@ import { useEffect, useState } from 'react';
 import CookieHelper from './helpers/cookieHelper';
 import Cart from './pages/Cart';
 import Details from './pages/Details';
+import Address from './pages/Address';
 // import Download from './components/Download';
 
 function App() {
+
+  CookieHelper.init();
 
   const [name, setName] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [cart, setCart] = useState({});
   const [products, setProducts] = useState([]);
-  const [authToken, setAuthToken] = useState("");
+  const [authToken, setAuthToken] = useState(CookieHelper.get("authToken") || "");
+  const [address, setAddress] = useState({});
+  const [isLoaded, setIsLoaded] = useState(false);
 
   function setCartWrapper(cartObject) {
     CookieHelper.set("cart", cartObject);
@@ -27,8 +32,7 @@ function App() {
   
   useEffect(() => {
     async function autoLogin() {
-      const authToken = CookieHelper.get("authToken");
-      if(authToken) {
+      if(authToken != "") {
         let res = await fetch(`${import.meta.env.VITE_URL}/auth/authToken`, {
           method: "GET",
           headers: {
@@ -36,13 +40,31 @@ function App() {
               'x-auth-token': authToken
           }
         })
-  
+
         if(res.status === 200) {
           res = await res.json();
           setName(res.data.name);
           setIsLoggedIn(true);
-          setAuthToken(authToken);
+          await fetchAddress();
         }
+      } else {
+        setName("");
+        setIsLoggedIn(false);
+      }
+    }
+
+    async function fetchAddress() {
+      let res = await fetch(`${import.meta.env.VITE_URL}/details/`, {
+        method: "GET",
+        headers: {
+            'Content-Type': 'application/json',
+            'x-auth-token': authToken
+        }
+      })
+
+      if(res.status === 200) {
+        res = await res.json();
+        setAddress(res.data);
       }
     }
 
@@ -67,25 +89,30 @@ function App() {
       }
     }
 
-    CookieHelper.init();
+    async function start() {
+      await Promise.all([
+        autoLogin(),
+        fetchAllProducts(),
+        fetchCart()
+      ]);
+      setIsLoaded(true);
+    }
 
-    autoLogin();
-    fetchAllProducts();
-    fetchCart();
-  }, [name])
-  
+    start();
+  }, [authToken])
 
   return(
       <BrowserRouter>
         <div className="page">
-          <Header className="page__header" name={name} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>
-          {products.length > 0 ? 
+          <Header className="page__header" name={name} isLoggedIn={isLoggedIn} setAuthToken={setAuthToken}/>
+          {isLoaded ? 
             <Routes>
               <Route path='/' element={<Home className="page__main" cart={cart} setCart={setCartWrapper} products={products}/>}></Route>
-              <Route path='/auth' element={!isLoggedIn ? <Auth className="page__main" setName={setName} setIsLoggedIn={setIsLoggedIn}/> : <Navigate replace to="/" />}></Route>
+              <Route path='/auth' element={!isLoggedIn ? <Auth className="page__main" setAuthToken={setAuthToken}/> : <Navigate replace to="/" />}></Route>
               <Route path='/activate/:id' element={<Activate className="page__main"/>}></Route>
               <Route path='/cart' element={<Cart className="page__main" cart={cart} setCart={setCartWrapper} products={products} isLoggedIn={isLoggedIn}/>}></Route>
-              <Route path='/details' element={<Details className="page__main" cart={cart} authToken={authToken}/>}></Route>
+              <Route path='/details' element={(!isLoggedIn || Object.keys(cart).length == 0) ? <Navigate replace to="/" /> : <Details className="page__main" cart={cart} authToken={authToken} address={address}/>}></Route>
+              <Route path='/address' element={isLoggedIn ? <Address className="page__main" setAuthToken={setAuthToken}/> : <Navigate replace to="/" />}></Route>
               <Route path='/*' element={<Navigate replace to="/" />}></Route>
             </Routes>
             :

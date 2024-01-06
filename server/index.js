@@ -18,10 +18,11 @@ const file = require('./routes/file');
 const auth = require('./routes/auth');
 const cart = require('./routes/cart');
 const booking = require('./routes/booking');
+const details = require('./routes/details');
 const ProductCatalogue = require("./helpers/productCatalogue");
 
 async function start() {
-    connectDB();
+    await connectDB();
     AdminMailer.init();
     ProductCatalogue.init();
     app.use(cors({
@@ -33,6 +34,7 @@ async function start() {
     app.use('/auth', auth);
     app.use('/cart', cart);
     app.use('/booking', authMiddleWare, booking);
+    app.use('/details', authMiddleWare, details);
     
     app.listen(port);
 } 

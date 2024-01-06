@@ -2,8 +2,9 @@ import { useEffect, useId, useState } from "react";
 import "./Details.css";
 import PatientDetails from "../components/PatientDetails";
 import Appointment from "../components/Appointment";
+import { Link } from "react-router-dom";
 
-function Details({ className, cart, authToken }) {
+function Details({ className, cart, authToken, address }) {
 
     const key = useId();
 
@@ -120,24 +121,34 @@ function Details({ className, cart, authToken }) {
 
     return(
         <main className={`details-main ${className}`}>
-            <div className="patient-details">
-                <div className="patient-details__info">
-                    <h2 className="patient-details__heading">Member Details</h2>
-                    <span className="patient-details__error">{patientDetailError}</span>
+            <div className="details-wrapper">
+                <div className="details__info">
+                    <h2 className="details__heading">Member Details</h2>
+                    <span className="details__error">{patientDetailError}</span>
                 </div>
                 {patientData.map(x => {
                     return (
                         <PatientDetails key={`${key}-${x.id}`} id={x.id} patientData={patientData} setPatientData={setPatientData} deletePatient={deletePatient}/>
                     )
                 })}
-                <button className="patient-details__add" onClick={addPatient}>ADD MORE</button>
+                <button className="details__button" onClick={addPatient}>ADD MORE</button>
             </div>
-            <div className="appointment-details">
-                <div className="appointment-details__info">
-                    <h2 className="appointment-details__heading">Select Slot</h2>
-                    <span className="appointment-details__error">{slotBookingError}</span>
+            <div className="details-wrapper">
+                <div className="details__info">
+                    <h2 className="details__heading">Address Details</h2>
                 </div>
-                <Appointment className="appointment-details__appointment" data={slotData} setSlotSelection={setSlotSelection} slotSelection={slotSelection}/>
+                {Object.keys(address).length == 0 ? 
+                    <Link className="details__button" to="/address" state={{ from: "details" }}>ADD ADDRESS</Link>
+                    :
+                    <></>
+                }
+            </div>
+            <div className="details-wrapper">
+                <div className="details__info">
+                    <h2 className="details__heading">Select Slot</h2>
+                    <span className="details__error">{slotBookingError}</span>
+                </div>
+                <Appointment className="details__appointment" data={slotData} setSlotSelection={setSlotSelection} slotSelection={slotSelection}/>
             </div>
             <button onClick={book} disabled={Object.keys(slotSelection).length === 0}>BOOK</button>
         </main>

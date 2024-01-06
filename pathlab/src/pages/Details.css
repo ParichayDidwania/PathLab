@@ -6,14 +6,14 @@
     padding: 1rem;
 }
 
-.patient-details, .appointment-details {
+.details-wrapper {
     display: flex;
     flex-direction: column;
 
     border: 2px solid #f5f5f5;
 }
 
-.patient-details__info, .appointment-details__info {
+.details__info {
     display: flex;
     flex-direction: column;
 
@@ -23,25 +23,27 @@
     background-color: #f5f5f5;
 }
 
-.patient-details__error, .appointment-details__error {
+.details__error {
     color: red;
 }
 
-.patient-details__add {
+.details__button {
     align-self: center;
 
-    border-radius: 50px;
+    border-radius: 10px;
     margin: 0.25rem;
     margin-bottom: 0.5rem;
     border: none;
     padding: 0.5rem;
 
     background-color: #ffcc29;
+    color: black;
 
-    font-weight: bold;
     cursor: pointer;
+    text-decoration: none;
+    font-size: 0.8rem;
 }
 
-.appointment-details__appointment {
+.details__appointment {
     align-self: center;
 }

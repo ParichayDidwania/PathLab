@@ -5,12 +5,12 @@ import key from '../assets/key.png';
 import Navbar from "./Navbar";
 import CookieHelper from "../helpers/cookieHelper";
 
-function Header({ className, name, isLoggedIn, setIsLoggedIn }) {
+function Header({ className, name, isLoggedIn, setAuthToken }) {
 
     function logout(e) {
         e.preventDefault();
         CookieHelper.remove('authToken');
-        setIsLoggedIn(false);
+        setAuthToken("");
     }
 
     return(

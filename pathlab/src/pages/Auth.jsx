@@ -5,7 +5,7 @@ import bcrypt from 'bcryptjs';
 import CookieHelper from "../helpers/cookieHelper";
 import { useNavigate, useLocation } from "react-router-dom";
 
-function Auth({ className, setName, setIsLoggedIn }) {
+function Auth({ className, setAuthToken }) {
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -65,8 +65,7 @@ function Auth({ className, setName, setIsLoggedIn }) {
         if(res.status === 200) {
             res = await res.json();
             CookieHelper.set("authToken", res.data.authToken);
-            setName(res.data.name);
-            setIsLoggedIn(true);
+            setAuthToken(res.data.authToken);
             navigate('/');
         } else {    
             res = await res.json();

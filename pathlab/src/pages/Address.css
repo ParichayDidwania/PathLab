@@ -1,0 +1,70 @@
+.address-main {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: start;
+}
+
+.address-form {
+    display: flex;
+    flex-direction: column;
+
+    margin: 2rem 0;
+    padding: 2rem;
+
+    background-color: #f5f5f5;
+}
+
+.address-form__heading, .address-form__info {
+    align-self: center;
+
+    margin-bottom: 1rem;
+}
+
+.address-form--required, .address-form__error {
+    color: red;
+
+    align-self: center;
+}
+
+.address-form__message {
+    align-self: center;
+
+    color: green;
+}
+
+.address-form__label {
+    margin-top: 0.5rem;
+}
+
+.address-form__phone-wrapper {
+    display: flex;
+    flex-direction: row;
+}
+
+.address-form__phone-span {
+    margin-right: 0.25rem;
+    border: 1px solid black;
+    padding: 0.25rem;
+
+    background-color: white;
+
+    font-weight: bold;
+    font-size: 0.85rem;
+}
+
+.address-form__phone-input {
+    flex-grow: 1;
+}
+
+.address-form__submit {
+    margin-top: 1rem;
+
+    background-color: #ffcc29;
+
+    font-weight: bold;
+}
+
+.address-form__submit:hover {
+    background-color: #d1a61a;
+}
