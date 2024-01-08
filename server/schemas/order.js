@@ -7,7 +7,7 @@ const OrderSchema = new mongoose.Schema({
     counter: { type: Number },
     date: { type: Date },
     time: { type: String },
-    address: { type: String },
+    address: {},
     members: [{
         name: { type: String },
         gender: { type: String }
@@ -17,8 +17,9 @@ const OrderSchema = new mongoose.Schema({
 }, { timestamps: true })
 
 class OrderModelClass {
-    static async createOrder(orderData, counter) {
+    static async createOrder(orderId, orderExpiry, orderData, counter) {
         const doc = await OrderModel.create({
+            _id: orderId,
             user_id: orderData.user_id,
             counter: counter,
             date: orderData.date,
@@ -26,7 +27,7 @@ class OrderModelClass {
             address: orderData.address,
             members: orderData.members,
             status: CONSTANTS.ORDER_STATUS.PAYMENT_PENDING,
-            expiresAt: moment().add(CONSTANTS.EXPIRATION_WINDOW, 'minutes')
+            expiresAt: orderExpiry
         })
 
         return doc;
@@ -42,6 +43,10 @@ class OrderModelClass {
 
     static async deleteOrders(order_id_arr) {
         OrderModel.deleteMany({ _id: { $in: order_id_arr } }).exec();
+    }
+
+    static async updateStatusToBooked(order_id) {
+        await OrderModel.updateOne({ _id: order_id }, { $set: { status: CONSTANTS.ORDER_STATUS.BOOKED }, $unset: { expiresAt: "" } });
     }
 }
 

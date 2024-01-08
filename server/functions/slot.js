@@ -45,12 +45,12 @@ class SlotFunction {
         return finalSlotDocs;
     }
 
-    static async clearExpiredSlots(slotDocs) { // WONT DELETE ORDERS to avoid API DELAY (WILL BE DONE IN CRONJOB)
+    static async clearExpiredSlots(slotDocs) { // WONT DELETE ORDERS
         const clearExpiredSlotPromises = [];
         for(const slotDoc of slotDocs) {
             for(const slot of slotDoc.slots) {
                 if(slot.tempBooked && moment().isAfter(moment(slot.expiresAt))) {
-                    clearExpiredSlotPromises.push(SlotModel.clearSlotByCounterAndId(slotDoc.counter, slot.id, true));
+                    clearExpiredSlotPromises.push(SlotModel.clearSlotByCounterAndId(slotDoc.counter, slot.id, slot.order_id, true));
                 }
             }
         }
@@ -83,35 +83,6 @@ class SlotFunction {
         }
 
         return formattedSlotDocs
-    }
-
-    static async clearExpiredSlotCronJob() { // runs  at 12 am everyday // clears slot and deletes order
-        const min = SlotFunction.getCounter() - 1;
-        const max = min + CONSTANTS.BOOKING_PERIOD;
-        let slotDocs = await SlotModel.fetchSlotsByCounters(min, max);
-
-        const clearExpiredSlotPromises = [];
-        const relatedOrderIds = new Set();
-        for(const slotDoc of slotDocs) {
-            for(const slot of slotDoc.slots) {
-                if(slot.tempBooked && moment().isAfter(moment(slot.expiresAt))) {
-                    relatedOrderIds.add(slot.order_id);
-                    clearExpiredSlotPromises.push(SlotModel.clearSlotByCounterAndId(slotDoc.counter, slot.id, true));
-                }
-            }
-        }
-
-        const lastDayOrders = await  OrderModel.fetchOrdersByCounter(min);
-        for(const order of lastDayOrders) { // for orders which arent deleted by api
-            if(moment().isAfter(order.expiresAt) && order.status == CONSTANTS.ORDER_STATUS.PAYMENT_PENDING) {
-                relatedOrderIds.add(order._id);
-            }
-        }
-
-        const deleteOrderPromise = OrderModel.deleteOrders(Array.from(relatedOrderIds));
-        
-        await Promise.all([...clearExpiredSlotPromises, deleteOrderPromise]);
-        console.log("DONE!");
     }
 }
 

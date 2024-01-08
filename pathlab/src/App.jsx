@@ -112,7 +112,7 @@ function App() {
               <Route path='/activate/:id' element={<Activate className="page__main"/>}></Route>
               <Route path='/cart' element={<Cart className="page__main" cart={cart} setCart={setCartWrapper} products={products} isLoggedIn={isLoggedIn}/>}></Route>
               <Route path='/details' element={(!isLoggedIn || Object.keys(cart).length == 0) ? <Navigate replace to="/" /> : <Details className="page__main" cart={cart} authToken={authToken} address={address}/>}></Route>
-              <Route path='/address' element={isLoggedIn ? <Address className="page__main" setAuthToken={setAuthToken}/> : <Navigate replace to="/" />}></Route>
+              <Route path='/address' element={isLoggedIn ? <Address className="page__main" authToken={authToken} address={address} setAddress={setAddress}/> : <Navigate replace to="/" />}></Route>
               <Route path='/*' element={<Navigate replace to="/" />}></Route>
             </Routes>
             :

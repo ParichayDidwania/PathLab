@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 function PatientDetails({ className, id, patientData, setPatientData, deletePatient }) {
 
     const [name, setName] = useState("");
-    const [gender, setGender] = useState("");
+    const [gender, setGender] = useState("Male");
 
     useEffect(() => {
         const data = patientData.find(x => x.id == id);

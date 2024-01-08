@@ -97,6 +97,7 @@
     color: #004368;
 
     text-decoration: none;
+    white-space: nowrap;
 }
 
 .profile__link:hover {

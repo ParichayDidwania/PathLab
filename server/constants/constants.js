@@ -1,7 +1,7 @@
 const moment = require('moment');
 
 class CONSTANTS {
-    static START_DATE = moment('2024-01-04T04:00:00Z');
+    static START_DATE = moment('2024-01-04T05:00:00Z');
     static BOOKING_PERIOD = 7; //days
     static TIMINGS = [
         { id: 1, time: "7:00 AM" },
@@ -28,6 +28,7 @@ class CONSTANTS {
     } 
 
     static EXPIRATION_WINDOW = 10; // minutes
+    static PAYMENT_EXPIRATION_OFFSET = 3;
 }
 
 module.exports = CONSTANTS;

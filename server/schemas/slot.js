@@ -43,12 +43,16 @@ class SlotModelClass {
         return await SlotModel.updateOne({ counter: counter, slots: { $elemMatch: { id: id, booked: false, tempBooked: false } } }, { $set: { "slots.$.tempBooked": true, "slots.$.order_id": order_id, "slots.$.expiresAt": expiresAt } })
     }
 
-    static async clearSlotByCounterAndId(counter, id, exec = false) {
+    static async clearSlotByCounterAndId(counter, id, order_id, exec = false) {
         if(exec) {
-            return SlotModel.updateOne({ counter: counter, slots: { $elemMatch: { id: id } } }, { $set: { "slots.$.tempBooked": false }, $unset: { "slots.$.order_id": "", "slots.$.expiresAt": "" } }).exec();
+            return SlotModel.updateOne({ counter: counter, slots: { $elemMatch: { id: id, order_id: order_id } } }, { $set: { "slots.$.tempBooked": false }, $unset: { "slots.$.order_id": "", "slots.$.expiresAt": "" } }).exec();
         } else {
-            return await SlotModel.updateOne({ counter: counter, slots: { $elemMatch: { id: id } } }, { $set: { "slots.$.tempBooked": false }, $unset: { "slots.$.order_id": "", "slots.$.expiresAt": "" } });
+            return await SlotModel.updateOne({ counter: counter, slots: { $elemMatch: { id: id, order_id: order_id } } }, { $set: { "slots.$.tempBooked": false }, $unset: { "slots.$.order_id": "", "slots.$.expiresAt": "" } });
         }
+    }
+
+    static async confirmBooking(counter, id, order_id) {
+        return await SlotModel.updateOne({ counter: counter, slots: { $elemMatch: { id: id, order_id: order_id } } }, { $set: { "slots.$.tempBooked": false, "slots.$.booked": true }, $unset: { "slots.$.expiresAt": ""} });
     }
 }
 

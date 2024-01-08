@@ -14,8 +14,8 @@ function Address({ className, authToken, address, setAddress }) {
     const [address_2, setAddress_2] = useState(address?.address_2 || "");
     const [city, setCity] = useState(address?.city || "");
     const [state, setState] = useState(address?.state || "");
-    const [zipCode, setZipCode] = useState(address?.zipCode || "");
-    const [phone, setPhone] = useState(address?.phone || "");
+    const [pin_code, set_pin_code] = useState(address?.pin_code?.toString() || "");
+    const [phone, setPhone] = useState(address?.phone?.toString() || "");
 
     const location = useLocation();
     const navigate = useNavigate();
@@ -31,14 +31,14 @@ function Address({ className, authToken, address, setAddress }) {
 
         setAddressMessage("");
 
-        if(address_1 == "" || city == "" || state == "" || zipCode == "" || phone == "") {
+        if(address_1 == "" || city == "" || state == "" || pin_code == "" || phone == "") {
             setAddressError("Please fill all the required fields");
             return;
         }
 
         const regex = new RegExp('^\\d+$');
         
-        if(!regex.test(zipCode) || zipCode.length != 6) {
+        if(!regex.test(pin_code) || pin_code.length != 6) {
             setAddressError("Please enter a valid Zip Code");
             return;
         }
@@ -52,14 +52,14 @@ function Address({ className, authToken, address, setAddress }) {
         setIsButtonDisabled(true);
         setButtonText("SAVING...");
 
-        let res = await fetch(`${import.meta.env.VITE_URL}/address`, {
+        let res = await fetch(`${import.meta.env.VITE_URL}/details/`, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',
                 'x-auth-token': authToken
             },
             body: JSON.stringify({
-                address_1, address_2, city, state, zipCode, phone
+                address_1, address_2, city, state, pin_code, phone
             })
         });
 
@@ -75,6 +75,7 @@ function Address({ className, authToken, address, setAddress }) {
                 setAddressMessage("Address Updated Successfully");
             }
         } else {
+            console.log(await res.json());
             setAddressError("Address Update Failed as the server is experiencing issues");
         }
     }
@@ -99,8 +100,8 @@ function Address({ className, authToken, address, setAddress }) {
                 <label className="address-form__label" htmlFor="state">State<span className="address-form--required">*</span></label>
                 <input className="address-form__input" id="state" name="state" value={state} onChange={(e) => { setState(e.target.value) }}></input>
 
-                <label className="address-form__label" htmlFor="zip_code">Zip Code<span className="address-form--required">*</span></label>
-                <input className="address-form__input" id="zip_code" name="zip_code" type="number" value={zipCode} onChange={(e) => { setZipCode(e.target.value) }}></input>
+                <label className="address-form__label" htmlFor="pin_code">Zip Code<span className="address-form--required">*</span></label>
+                <input className="address-form__input" id="pin_code" name="pin_code" type="number" value={pin_code} onChange={(e) => { set_pin_code(e.target.value) }}></input>
 
                 <label className="address-form__label" htmlFor="phone">Phone Number<span className="address-form--required">*</span></label>
                 <div className="address-form__phone-wrapper">

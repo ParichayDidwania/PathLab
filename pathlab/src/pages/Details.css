@@ -44,6 +44,31 @@
     font-size: 0.8rem;
 }
 
+.details__address-view {
+    padding: 1rem;
+}
+
 .details__appointment {
     align-self: center;
+}
+
+.details__book-button {
+    align-self: center;
+
+    margin: 0.25rem;
+    margin-bottom: 0.5rem;
+    border: 1px solid black;
+    padding: 0.5rem 2rem;
+
+    background-color: #ffcc29;
+    color: black;
+
+    cursor: pointer;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+.details__book-button:hover {
+    background-color: #d1a61a;
 }

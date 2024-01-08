@@ -24,6 +24,7 @@ function Header({ className, name, isLoggedIn, setAuthToken }) {
                         <button className="profile-button"><img className="login-image" src={user} alt="A person in a circle"></img><span className="profile-name-span">{name}</span></button>
                         <ul className="profile__list">
                             <li className="profile__item"><a className="profile__link" href="" onClick={logout}>Logout</a></li>
+                            <li className="profile__item"><Link className="profile__link" to="/address">Manage Address</Link></li>
                         </ul>
                     </div>
                 }

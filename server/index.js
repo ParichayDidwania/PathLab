@@ -19,6 +19,7 @@ const auth = require('./routes/auth');
 const cart = require('./routes/cart');
 const booking = require('./routes/booking');
 const details = require('./routes/details');
+const cashfree = require('./routes/cashfree');
 const ProductCatalogue = require("./helpers/productCatalogue");
 
 async function start() {
@@ -34,6 +35,7 @@ async function start() {
     app.use('/auth', auth);
     app.use('/cart', cart);
     app.use('/booking', authMiddleWare, booking);
+    app.use('/cashfree', cashfree);
     app.use('/details', authMiddleWare, details);
     
     app.listen(port);
