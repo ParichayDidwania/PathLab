@@ -22,6 +22,8 @@ function Details({ className, cart, authToken, address }) {
     const [bookButtonText, setBookButtonText] = useState("BOOK");
     const [isBookButtonDisabled, setIsBookButtonDisabled] = useState(false);
 
+    const [pageError, setPageError] = useState("");
+
     const memberDetailRef = useRef();
     const addressRef = useRef();
     const slotRef = useRef();
@@ -128,6 +130,7 @@ function Details({ className, cart, authToken, address }) {
         }
 
         setSlotBookingError("");
+        setPageError("");
         setIsBookButtonDisabled(true);
         setBookButtonText("BOOKING...");
 
@@ -161,7 +164,7 @@ function Details({ className, cart, authToken, address }) {
             if(res.for == "slot") {
                 setSlotBookingError(res.error);
             } else if (res.for == "page") {
-                // set error for page
+                setPageError(res.error);
             }
             setSlotSelection({});
             fetchSlot();
@@ -206,6 +209,7 @@ function Details({ className, cart, authToken, address }) {
                 <Appointment className="details__appointment" data={slotData} setSlotSelection={setSlotSelection} slotSelection={slotSelection}/>
             </div>
             <button className="details__book-button" onClick={book} disabled={isBookButtonDisabled}>{bookButtonText}</button>
+            <span className="details__error details__page-error">{pageError}</span>
         </main>
     )
 }   

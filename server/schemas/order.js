@@ -1,10 +1,11 @@
 const mongoose = require('mongoose');
 const CONSTANTS = require('../constants/constants');
-const moment = require('moment');
 
 const OrderSchema = new mongoose.Schema({
     user_id: { type: mongoose.Types.ObjectId, index: true },
     counter: { type: Number },
+    products: {},
+    amount: { type: Number },
     date: { type: Date },
     time: { type: String },
     address: {},
@@ -22,6 +23,8 @@ class OrderModelClass {
             _id: orderId,
             user_id: orderData.user_id,
             counter: counter,
+            products: orderData.products,
+            amount: orderData.amount,
             date: orderData.date,
             time: orderData.time,
             address: orderData.address,
@@ -33,8 +36,8 @@ class OrderModelClass {
         return doc;
     }
 
-    static async fetchOrdersByCounter(counter) {
-        return await OrderModel.find({ counter: counter });
+    static async fetchOrdersByUser(user_id, skip, limit) {
+        return await OrderModel.find({ user_id: user_id, status: { $gte: CONSTANTS.ORDER_STATUS.BOOKED } }).skip(skip).limit(limit).sort({ _id: -1 });
     }
 
     static async deleteOrder(order_id) {

@@ -1,13 +1,18 @@
 const express = require('express');
 const SlotModel = require('../schemas/slot');
 const OrderModel = require('../schemas/order');
+const mongoose = require('mongoose');
 const router = express.Router();
 
 router.post('/webhook/:order_id/:counter/:id', async (req, res) => {
-    const order_id = req.params.order_id;
-    const counter = req.params.counter;
-    const id = req.params.id;
-    const status = req.body.data.payment.payment_status;
+    if(req.body.type != "PAYMENT_LINK_EVENT") {
+        return res.send({ "message": "success" });
+    }
+
+    const order_id = new mongoose.mongo.ObjectId(req.params.order_id);
+    const counter = parseInt(req.params.counter);
+    const id = parseInt(req.params.id);
+    const status = req.body.data.order.transaction_status;
 
     if(!order_id || !counter || !id) {
         return res.send({ "message": "success" }); // webhook needs 200 or it will retry same request

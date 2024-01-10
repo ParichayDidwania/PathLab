@@ -11,6 +11,8 @@ import CookieHelper from './helpers/cookieHelper';
 import Cart from './pages/Cart';
 import Details from './pages/Details';
 import Address from './pages/Address';
+import Success from './pages/Success';
+import Bookings from './pages/Bookings';
 // import Download from './components/Download';
 
 function App() {
@@ -113,6 +115,8 @@ function App() {
               <Route path='/cart' element={<Cart className="page__main" cart={cart} setCart={setCartWrapper} products={products} isLoggedIn={isLoggedIn}/>}></Route>
               <Route path='/details' element={(!isLoggedIn || Object.keys(cart).length == 0) ? <Navigate replace to="/" /> : <Details className="page__main" cart={cart} authToken={authToken} address={address}/>}></Route>
               <Route path='/address' element={isLoggedIn ? <Address className="page__main" authToken={authToken} address={address} setAddress={setAddress}/> : <Navigate replace to="/" />}></Route>
+              <Route path='/success' element={isLoggedIn ? <Success className="page__main" setCart={setCart}/> : <Navigate replace to="/" />}></Route>
+              <Route path='/bookings' element={isLoggedIn ? <Bookings className="page__main" authToken={authToken}/> : <Navigate replace to="/" />}></Route>
               <Route path='/*' element={<Navigate replace to="/" />}></Route>
             </Routes>
             :

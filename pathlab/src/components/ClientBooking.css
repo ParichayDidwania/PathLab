@@ -1,0 +1,75 @@
+.client-booking-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.client-booking-top {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.client-booking-order-id-span {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.client-booking-order-id-value {
+    font-weight: bold;
+}
+
+.client-booking-copy-order-id {
+    vertical-align: bottom;
+
+    margin-left: 0.25rem;
+
+    cursor: pointer;
+}
+
+.client-booking-details-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    border-top: 1px dashed black;
+    padding-top: 0.5rem;
+}
+
+.client-booking-details-span {
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.client-booking-quantity-x {
+    vertical-align: top;
+
+    font-weight: bold;
+    font-size: 0.8rem;
+}
+
+.client-booking-list {
+    padding: 0;
+    list-style-position: inside;
+}
+
+.client-booking-amount-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.client-booking-status-wrapper {
+    display: flex;
+    flex-direction: row;
+
+    border-top: 1px dashed black;
+    padding-top: 0.5rem;
+}
+
+.client-booking-status-value {
+    color: green;
+
+    font-weight: bold;
+}

@@ -9,6 +9,31 @@ const mongoose = require('mongoose');
 const moment = require('moment');
 const CONSTANTS = require("../constants/constants");
 
+router.get('/:start', async (req, res) => {
+  const regex = new RegExp('^\\d+$');
+  const start = req.params.start && regex.test(req.params.start) ? parseInt(req.params.start) : 0;
+  const orderDocs = await OrderModel.fetchOrdersByUser(req.user._id, start, CONSTANTS.PAGINATION_LIMIT);
+
+  const orders = [];
+  for(const orderDoc of orderDocs) {
+    orders.push({
+      order_id: orderDoc._id,
+      products: Object.keys(orderDoc.products).map((product_id) => { 
+        return {
+          name: ProductCatalogue.getById(product_id).title,
+          quantity: orderDoc.products[product_id]
+        }
+      }),
+      date: moment(orderDoc.date).format("MMMM DD, YYYY"),
+      time: orderDoc.time,
+      amount: orderDoc.amount,
+      status: orderDoc.status
+    })
+  }
+
+  res.send({ message: "success", data: orders });
+})
+
 router.get('/slots', async(req, res) => {
     const slots = await SlotFunction.checkAndCreateSlots();
     const formattedSlots = SlotFunction.formatDate(slots);
@@ -49,6 +74,7 @@ router.post('/book', async(req, res) => {
         return;
     }
 
+    orderData.amount = ProductCatalogue.getCartItemsCost(orderData.products);
     orderData.date = slotDoc.on;
     orderData.time = slotDoc.slots[0].time;
 
@@ -68,49 +94,57 @@ router.post('/book', async(req, res) => {
         return;
     }
 
-    let cashfreeCall = await fetch(`${process.env.CASHFREE_TEST_URL}/links`,{
-      method: "POST",
-      headers: {
-        'accept': 'application/json',
-        'content-type': 'application/json',
-        'x-api-version': '2022-09-01',
-        'x-client-id': process.env.CASHFREE_ID,
-        'x-client-secret': process.env.CASHFREE_SECRET
-      },
-      body: JSON.stringify({
-        link_id: orderId,
-        link_amount: ProductCatalogue.getCartItemsCost(orderData.products),
-        link_currency: "INR",
-        link_purpose: "Payment for some product",
-        customer_details: {
-          customer_phone: orderData.address.phone.toString(),
-          customer_email: req.user.email,
-          customer_name: req.user.name
+    try {
+      let cashfreeCall = await fetch(`${process.env.CASHFREE_TEST_URL}/links`,{
+        method: "POST",
+        headers: {
+          'accept': 'application/json',
+          'content-type': 'application/json',
+          'x-api-version': '2022-09-01',
+          'x-client-id': process.env.CASHFREE_ID,
+          'x-client-secret': process.env.CASHFREE_SECRET
         },
-        link_expiry_time: paymentExpiry,
-        link_notify: {
-          send_sms: true,
-          send_email: true
-        },
-        link_meta: {
-          payment_methods: "upi,cc,dc,nb",
-          return_url: `${process.env.WEBSITE_URL}/success`,
-          notify_url: `https://612c-73-119-14-155.ngrok-free.app/cashfree/webhook/${orderId}/${counter}/${id}`
-        }
+        body: JSON.stringify({
+          link_id: orderId,
+          link_amount: orderData.amount,
+          link_currency: "INR",
+          link_purpose: "Payment for some product",
+          customer_details: {
+            customer_phone: orderData.address.phone.toString(),
+            customer_email: req.user.email,
+            customer_name: req.user.name
+          },
+          link_expiry_time: paymentExpiry,
+          link_notify: {
+            send_sms: true,
+            send_email: true
+          },
+          link_meta: {
+            payment_methods: "upi,cc,dc,nb",
+            return_url: `${process.env.WEBSITE_URL}/success`,
+            notify_url: `${process.env.DOMAIN}/cashfree/webhook/${orderId}/${counter}/${id}`
+          }
+        })
       })
-    })
-
-    if(cashfreeCall.status === 200) {
-      cashfreeCall = await cashfreeCall.json();
-      res.send({
-        message: "success",
-        data: {
-          url: cashfreeCall.link_url
-        }
-      });
-    } else {
-      cashfreeCall = await cashfreeCall.json();
-      console.log(cashfreeCall);
+  
+      if(cashfreeCall.status === 200) {
+        cashfreeCall = await cashfreeCall.json();
+        res.send({
+          message: "success",
+          data: {
+            url: cashfreeCall.link_url
+          }
+        });
+      } else {
+        cashfreeCall = await cashfreeCall.json();
+        console.log(cashfreeCall);
+        res.status(400).send({
+          for: "page",
+          error: "Payment gateway is down"
+        });
+      }
+    } catch (err) {
+      console.log(err);
       res.status(400).send({
         for: "page",
         error: "Payment gateway is down"

@@ -29,6 +29,7 @@ class CONSTANTS {
 
     static EXPIRATION_WINDOW = 10; // minutes
     static PAYMENT_EXPIRATION_OFFSET = 3;
+    static PAGINATION_LIMIT = 10;
 }
 
 module.exports = CONSTANTS;

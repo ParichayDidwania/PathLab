@@ -62,6 +62,14 @@ class ProductCatalogue {
         return ProductCatalogue.__products;
     }
 
+    static getById(id) {
+        for(const product of ProductCatalogue.__products) {
+            if(id == product.id) {
+                return {...product};
+            }
+        }
+    }
+
     static getByIds(idArray) {
         const productArray = [];
         for(const product of ProductCatalogue.__products) {
