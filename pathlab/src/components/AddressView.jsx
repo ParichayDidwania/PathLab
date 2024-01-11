@@ -1,8 +1,8 @@
 import "./AddressView.css";
 
-function AddressView({ className, address }) {
+function AddressView({ className, address, backgroundColor = 1 }) {
     return(
-        <div className={`address-view ${className}`}>
+        <div className={`${backgroundColor == 1 ? `address-view` : `address-view-white`} ${className}`}>
             <h3>Selected Address</h3>
             <span className="address-view__span">{address.address_1}</span>
             <span className="address-view__span">{address.address_2 ? address.address_2 : ""}</span>

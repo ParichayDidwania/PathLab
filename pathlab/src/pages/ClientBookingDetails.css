@@ -1,0 +1,112 @@
+.client-booking-details-main {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    margin: 1rem;
+    padding: 1rem;
+
+    background-color: #f5f5f5;
+}
+
+.client-booking-details-main__error-span {
+    align-self: center;
+
+    color: red;
+}
+
+.client-booking-details-main__heading {
+    align-self: center;
+}
+
+.client-booking-details-top {
+    display: flex;
+    flex-direction: column;
+}
+
+.client-booking-details-order-id-span {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.client-booking-details-order-id-value {
+    font-weight: bold;
+}
+
+.client-booking-details-copy-order-id {
+    vertical-align: bottom;
+
+    margin-left: 0.25rem;
+
+    cursor: pointer;
+}
+
+.client-booking-details-main__status-span {
+    color: green;
+
+    font-weight: bold;
+}
+
+.client-booking-details-main__item-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    padding: 0.5rem;
+
+    background-color: white;
+}
+
+.client-booking-details-main__item-list {
+    padding: 0;
+
+    list-style-position: inside;
+}
+
+.client-booking-details-main__quantity-x {
+    vertical-align: top;
+
+    font-weight: bold;
+    font-size: 0.8rem;
+}
+
+.client-booking-details-main__amount-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    border-top: 1px dashed black;
+    padding-top: 0.5rem;
+}
+
+.client-booking-details-main__total-span {
+    font-weight: bold;
+}
+
+.client-booking-details-main__member-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    padding: 0.5rem;
+
+    background-color: white;
+}
+
+.client-booking-details-main__address-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    padding: 0.5rem;
+
+    background-color: white;
+}
+
+@media (min-width: 40rem) {
+    .client-booking-details-top {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+}

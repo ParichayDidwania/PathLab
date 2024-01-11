@@ -2,8 +2,9 @@ import "./ClientBooking.css";
 import copy from "../assets/copy.png";
 import { useId } from "react";
 import CONSTANTS from "../helpers/constants";
+import { Link } from "react-router-dom";
 
-function ClientBooking({ className, order_id, date, time, products, amount, status }) {
+function ClientBooking({ className, order_id, date, time, products, amount, status, isDownloadDisabled = true }) {
     const id = useId();
 
     function copyToClipboard() {
@@ -44,6 +45,10 @@ function ClientBooking({ className, order_id, date, time, products, amount, stat
                 <span>Status:&nbsp;
                     <span className="client-booking-status-value">{CONSTANTS.ORDER_STATUS[status]}</span>
                 </span>
+                <div className="client-booking-status-control-wrapper">
+                    <Link className="client-booking-status-control" to={`/booking-detail/${order_id}`}>Order Details</Link>
+                    <button className={`client-booking-status-control ${isDownloadDisabled && "client-booking-status-control--disabled"}`} disabled={isDownloadDisabled}>Download Report</button>
+                </div>
             </div>
         </div>
     );

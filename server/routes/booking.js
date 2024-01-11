@@ -31,7 +31,49 @@ router.get('/:start', async (req, res) => {
     })
   }
 
-  res.send({ message: "success", data: orders });
+  const isLast = orders.length < CONSTANTS.PAGINATION_LIMIT;
+
+  res.send(
+    { 
+      message: "success", 
+      data: {
+        orders: orders,
+        isLast: isLast  
+      }
+    });
+})
+
+router.get('/order/:order_id', async (req, res) => {
+  const order_id = req.params.order_id && mongoose.isValidObjectId(req.params.order_id) ? req.params.order_id : undefined;
+  if(!order_id) {
+    return res.status(400).send({ error: "Invalid Order Id" });
+  }
+
+  const orderDoc = await OrderModel.fetchOrderByUserAndId(req.user._id, order_id);
+  if(!orderDoc) {
+    return res.status(400).send({ error: "This order Id does not exist for this account" });
+  }
+
+  const order = {
+    order_id: orderDoc._id,
+    products: Object.keys(orderDoc.products).map((product_id) => { 
+      return {
+        name: ProductCatalogue.getById(product_id).title,
+        quantity: orderDoc.products[product_id]
+      }
+    }),
+    date: moment(orderDoc.date).format("MMMM DD, YYYY"),
+    time: orderDoc.time,
+    amount: orderDoc.amount,
+    status: orderDoc.status,
+    members: orderDoc.members,
+    address: orderDoc.address
+  };
+
+  res.send({
+    message: "success",
+    data: order
+  })
 })
 
 router.get('/slots', async(req, res) => {

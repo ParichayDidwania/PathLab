@@ -6,8 +6,7 @@
 
 .client-booking-top {
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    flex-direction: column;
 }
 
 .client-booking-order-id-span {
@@ -62,7 +61,7 @@
 
 .client-booking-status-wrapper {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
 
     border-top: 1px dashed black;
     padding-top: 0.5rem;
@@ -72,4 +71,51 @@
     color: green;
 
     font-weight: bold;
+}
+
+.client-booking-status-control-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.client-booking-status-control {
+    align-self: center;
+
+    border: none;
+    padding: 0.1rem 0.5rem;
+
+    background-color: #ffcc29;
+    color: black;
+
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 1rem;
+}
+
+.client-booking-status-control:hover:enabled {
+    background-color: #d1a61a;
+}
+
+.client-booking-status-control--disabled {
+    opacity: 0.6;
+
+    cursor: initial;
+}
+
+@media (min-width: 40rem) {
+    .client-booking-top {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .client-booking-status-wrapper {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .client-booking-status-control-wrapper {
+        justify-content: initial;
+        gap: 1rem;
+    }
 }

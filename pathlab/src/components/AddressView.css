@@ -5,6 +5,13 @@
     background-color: #f5f5f5;
 }
 
+.address-view-white {
+    display: flex;
+    flex-direction: column;
+
+    background-color: white;
+}
+
 .address-view__span {
     font-weight: 500;
 }

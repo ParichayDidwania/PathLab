@@ -40,6 +40,10 @@ class OrderModelClass {
         return await OrderModel.find({ user_id: user_id, status: { $gte: CONSTANTS.ORDER_STATUS.BOOKED } }).skip(skip).limit(limit).sort({ _id: -1 });
     }
 
+    static async fetchOrderByUserAndId(user_id, order_id) {
+        return await OrderModel.findOne({ _id: order_id, user_id: user_id, status: { $gte: CONSTANTS.ORDER_STATUS.BOOKED } });
+    }
+
     static async deleteOrder(order_id) {
         await OrderModel.deleteOne({ _id: order_id });
     }
