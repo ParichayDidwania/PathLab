@@ -58,6 +58,18 @@ class ProductCatalogue {
         ProductCatalogue.__commute_cost = 100;
     }
 
+    static getNoDescriptionCatalogue() {
+        const products = ProductCatalogue.__products.map((product) => {
+            return {
+                id: product.id,
+                title: product.title,
+                price: product.price
+            }
+        })
+
+        return products;
+    }
+
     static getAll() {
         return ProductCatalogue.__products;
     }

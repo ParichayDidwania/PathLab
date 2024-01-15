@@ -7,7 +7,7 @@ const homeTestIds = [1,2,3,4,4];
 router.get('/all', async(req, res) => {
     res.send({
         message: "success",
-        data: ProductCatalogue.getAll()
+        data: ProductCatalogue.getNoDescriptionCatalogue()
     })
 })
 

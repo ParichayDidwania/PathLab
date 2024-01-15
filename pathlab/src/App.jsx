@@ -14,6 +14,7 @@ import Address from './pages/Address';
 import Success from './pages/Success';
 import Bookings from './pages/Bookings';
 import ClientBookingDetails from './pages/ClientBookingDetails';
+import Search from './pages/Search';
 // import Download from './components/Download';
 
 function App() {
@@ -119,6 +120,7 @@ function App() {
               <Route path='/success' element={isLoggedIn ? <Success className="page__main" setCart={setCart}/> : <Navigate replace to="/" />}></Route>
               <Route path='/bookings' element={isLoggedIn ? <Bookings className="page__main" authToken={authToken}/> : <Navigate replace to="/" />}></Route>
               <Route path='/booking-detail/:order_id' element={isLoggedIn ? <ClientBookingDetails className="page__main" authToken={authToken}/> : <Navigate replace to="/" />}></Route>
+              <Route path='/search' element={<Search className="page__main" products={products} cart={cart} setCart={setCart}/>}></Route>
               <Route path='/*' element={<Navigate replace to="/" />}></Route>
             </Routes>
             :

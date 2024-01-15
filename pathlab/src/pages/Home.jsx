@@ -1,6 +1,7 @@
 import { useEffect, useId, useState } from "react";
 import "./Home.css";
 import Card from "../components/Card";
+import SearchBar from "../components/SearchBar";
 
 function Home({ className, cart, setCart, products }) {
 
@@ -35,10 +36,7 @@ function Home({ className, cart, setCart, products }) {
     return(
         <main className={`home-main ${className}`}>
             <h2 className="home-main__heading">Tests</h2>
-            <form className="search-form">
-                <input className="search-form__input" placeholder="Search for a test..."></input>
-                <button className="search-form__submit-button" type="submit">&#x1F50E;&#xFE0E;</button>
-            </form>
+            <SearchBar products={products}/>
             <div className="cards">
                 {testArray}
             </div>

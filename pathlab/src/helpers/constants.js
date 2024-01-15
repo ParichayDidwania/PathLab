@@ -3,7 +3,9 @@ const CONSTANTS = {
         1: 'BOOKED',
         2: 'SAMPLE COLLECTED',
         3: 'COMPLETED'
-    }
+    },
+
+    MAX_SUGGESTION_LENGTH: 5
 }
 
 export default CONSTANTS;

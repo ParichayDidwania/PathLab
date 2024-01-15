@@ -6,43 +6,6 @@
     padding-top: 1rem;
 }
 
-.search-form {
-    position: relative;
-
-    display: flex;
-    flex-direction: row;
-
-    margin-top: 1rem;
-    width: 70%;
-}
-
-.search-form__input {
-    flex-grow: 1;
-
-    border: none;
-    border-radius: 5px;
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-    box-shadow: 0 0 2px;
-    padding-left: 0.5rem;
-}
-
-.search-form__submit-button {
-    position: absolute;
-    right: -3%;
-    top: -13%;
-
-    border: none;
-    border-radius: 100px;
-    padding: 0.3rem 0.5rem;
-
-    color: #004368;
-    background-color: #ffcc29;
-    
-    font-size: 1.5rem;
-    cursor: pointer;
-}
-
 .cards {
     display: grid;
     grid-template-columns: repeat(12, 1fr);

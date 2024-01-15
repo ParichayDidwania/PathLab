@@ -2,6 +2,10 @@ import { Link } from "react-router-dom";
 import "./Navbar.css";
 import { useLocation } from "react-router-dom";
 
+function forceLooseFocus(e) {
+    e.target.blur()
+}
+
 function Navbar({ className }) {
     const location = useLocation();
     return(
@@ -10,11 +14,11 @@ function Navbar({ className }) {
                 <i className="gg-menu"></i>
             </button>
             <ul className="nav__list">
-                <li className="nav__item"><Link className={`nav__link ${location.pathname === '/' && "nav__link--opened"}`} to="/">Tests</Link></li>
-                <li className="nav__item"><Link className={`nav__link ${location.pathname === '/cart' && "nav__link--opened"}`} to="/cart">Cart</Link></li>
-                <li className="nav__item"><Link className={`nav__link ${location.pathname === '/bookings' && "nav__link--opened"}`} to="/bookings">Bookings</Link></li>
-                <li className="nav__item"><Link className={`nav__link ${location.pathname === '/about' && "nav__link--opened"}`} to="/about">About Us</Link></li>
-                <li className="nav__item"><Link className={`nav__link ${location.pathname === '/get-in-touch' && "nav__link--opened"}`} to="/get-in-touch">Get In Touch</Link></li>
+                <li className="nav__item"><Link className={`nav__link ${location.pathname === '/' && "nav__link--opened"}`} to="/" onClick={forceLooseFocus}>Tests</Link></li>
+                <li className="nav__item"><Link className={`nav__link ${location.pathname === '/cart' && "nav__link--opened"}`} to="/cart" onClick={forceLooseFocus}>Cart</Link></li>
+                <li className="nav__item"><Link className={`nav__link ${location.pathname === '/bookings' && "nav__link--opened"}`} to="/bookings" onClick={forceLooseFocus}>Bookings</Link></li>
+                <li className="nav__item"><Link className={`nav__link ${location.pathname === '/about' && "nav__link--opened"}`} to="/about" onClick={forceLooseFocus}>About Us</Link></li>
+                <li className="nav__item"><Link className={`nav__link ${location.pathname === '/get-in-touch' && "nav__link--opened"}`} to="/get-in-touch" onClick={forceLooseFocus}>Get In Touch</Link></li>
             </ul>
         </nav>
     )
