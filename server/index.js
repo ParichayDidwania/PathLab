@@ -12,6 +12,7 @@ const upload = multer({ storage: multer.memoryStorage() });
 app.use(express.json());
 
 const authMiddleWare = require('./middlewares/authMW');
+const adminAuthMiddleWare = require('./middlewares/adminAuthMW');
 
 const home = require('./routes/home');
 const file = require('./routes/file');
@@ -20,6 +21,7 @@ const cart = require('./routes/cart');
 const booking = require('./routes/booking');
 const details = require('./routes/details');
 const cashfree = require('./routes/cashfree');
+const admin = require('./routes/admin');
 const ProductCatalogue = require("./helpers/productCatalogue");
 
 async function start() {
@@ -37,6 +39,7 @@ async function start() {
     app.use('/booking', authMiddleWare, booking);
     app.use('/cashfree', cashfree);
     app.use('/details', authMiddleWare, details);
+    app.use('/admin', adminAuthMiddleWare, admin);
     
     app.listen(port);
 } 

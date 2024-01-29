@@ -5,7 +5,9 @@ const CONSTANTS = {
         3: 'COMPLETED'
     },
 
-    MAX_SUGGESTION_LENGTH: 5
+    MAX_SUGGESTION_LENGTH: 5,
+
+    PAGINATION_LIMIT: 10
 }
 
 export default CONSTANTS;

@@ -1,0 +1,29 @@
+.admin-page-controller {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+
+.admin-page-controller__direction-controls {
+    border: none;
+    padding: 0 0.2rem;
+    
+    background: none;
+
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.admin-page-controller__page {
+    border: none;
+
+    background: none;
+
+    color: #0000EE;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.admin-page-controller__page--selected {
+    color: #ffcc29;
+}

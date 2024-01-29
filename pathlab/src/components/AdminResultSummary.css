@@ -1,0 +1,15 @@
+.admin-result-summary {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    margin-top: 0.5rem;
+    padding: 0 0.5rem;
+
+    background-color: #f5f5f5;
+}
+
+.admin-result-summary__pages {
+    display: flex;
+    flex-direction: column;
+}

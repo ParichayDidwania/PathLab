@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const CONSTANTS = require('../constants/constants');
 
 const UserSchema = new mongoose.Schema({
     name: { type: String, require: true },
@@ -6,7 +7,8 @@ const UserSchema = new mongoose.Schema({
     password: { type: String, require: true },
     activationId: { type: String },
     activated: { type: Boolean, default: false },
-    authToken: { type: String }
+    authToken: { type: String },
+    type: { type: Number, default: CONSTANTS.USER_TYPE.USER }
 }, { timestamps: true })
 
 class UserModelClass {
@@ -15,7 +17,8 @@ class UserModelClass {
             name: userObject.name,
             email: userObject.email,
             password: userObject.password,
-            activationId: generatedLink
+            activationId: generatedLink,
+            type: CONSTANTS.USER_TYPE.USER
         })
     }
 

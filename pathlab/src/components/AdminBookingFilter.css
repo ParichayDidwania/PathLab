@@ -1,0 +1,36 @@
+.admin-booking-filter-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    gap: 0.25rem;
+
+    padding: 0.5rem;
+
+    background-color: #f5f5f5;
+}
+
+.admin-booking-filter-form__label {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.admin-booking-filter-form__date-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+@media (min-width: 40rem) {
+    .admin-booking-filter-form__label {
+        justify-content: start;
+        gap: 1rem;
+    }
+
+    .admin-booking-filter-form__date-wrapper {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+}
+
+

@@ -5,7 +5,7 @@ import key from '../assets/key.png';
 import Navbar from "./Navbar";
 import CookieHelper from "../helpers/cookieHelper";
 
-function Header({ className, name, isLoggedIn, setAuthToken }) {
+function Header({ className, name, isLoggedIn, setAuthToken, isAdmin }) {
 
     function logout(e) {
         e.preventDefault();
@@ -29,7 +29,7 @@ function Header({ className, name, isLoggedIn, setAuthToken }) {
                     </div>
                 }
             </div>
-            <Navbar className="nav-bar"/>
+            <Navbar className="nav-bar" isAdmin={isAdmin}/>
         </header>
     )
 }

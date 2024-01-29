@@ -1,0 +1,20 @@
+.admin-booking-main {
+    display: flex;
+    flex-direction: column;
+}
+
+.admin-booking-main__heading {
+    align-self: center;
+
+    margin-top: 0.5rem;
+}
+
+.admin-booking-main__filter {
+    margin-top: 0.5rem;
+}
+
+.admin-booking-main__controller {
+    align-self: center;
+
+    margin-top: 0.5rem;
+}

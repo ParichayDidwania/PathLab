@@ -4,6 +4,7 @@ const router = express.Router();
 const HelperClass = require('../helpers/helper');
 const AdminMailer = require('../helpers/adminMailer');
 const bcrypt = require('bcryptjs');
+const CONSTANTS = require('../constants/constants');
 
 router.post('/register', async (req, res) => {
     try {
@@ -56,7 +57,8 @@ router.post('/login', async(req, res) => {
 
     res.send({ message: "success", data: {
         name: doc.name,
-        authToken: authToken
+        authToken: authToken,
+        isAdmin: doc.type == CONSTANTS.USER_TYPE.ADMIN
     }})
 })
 
@@ -67,7 +69,8 @@ router.get('/authToken', async (req, res) => {
     if(doc) {
         res.send({ message: "success", data: {
             name: doc.name,
-            authToken: doc.authToken
+            authToken: doc.authToken,
+            isAdmin: doc.type == CONSTANTS.USER_TYPE.ADMIN
         }})
     } else {
         res.status(400).send({ error: "Auth Token is invalid" });

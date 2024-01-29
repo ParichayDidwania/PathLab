@@ -15,6 +15,7 @@ import Success from './pages/Success';
 import Bookings from './pages/Bookings';
 import ClientBookingDetails from './pages/ClientBookingDetails';
 import Search from './pages/Search';
+import AdminBookings from './pages/AdminBookings';
 // import Download from './components/Download';
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
   const [authToken, setAuthToken] = useState(CookieHelper.get("authToken") || "");
   const [address, setAddress] = useState({});
   const [isLoaded, setIsLoaded] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   function setCartWrapper(cartObject) {
     CookieHelper.set("cart", cartObject);
@@ -49,11 +51,13 @@ function App() {
           res = await res.json();
           setName(res.data.name);
           setIsLoggedIn(true);
+          setIsAdmin(res.data.isAdmin);
           await fetchAddress();
         }
       } else {
         setName("");
         setIsLoggedIn(false);
+        setIsAdmin(false);
       }
     }
 
@@ -108,19 +112,26 @@ function App() {
   return(
       <BrowserRouter>
         <div className="page">
-          <Header className="page__header" name={name} isLoggedIn={isLoggedIn} setAuthToken={setAuthToken}/>
+          <Header className="page__header" name={name} isLoggedIn={isLoggedIn} setAuthToken={setAuthToken} isAdmin={isAdmin}/>
           {isLoaded ? 
             <Routes>
-              <Route path='/' element={<Home className="page__main" cart={cart} setCart={setCartWrapper} products={products}/>}></Route>
-              <Route path='/auth' element={!isLoggedIn ? <Auth className="page__main" setAuthToken={setAuthToken}/> : <Navigate replace to="/" />}></Route>
-              <Route path='/activate/:id' element={<Activate className="page__main"/>}></Route>
-              <Route path='/cart' element={<Cart className="page__main" cart={cart} setCart={setCartWrapper} products={products} isLoggedIn={isLoggedIn}/>}></Route>
-              <Route path='/details' element={(!isLoggedIn || Object.keys(cart).length == 0) ? <Navigate replace to="/" /> : <Details className="page__main" cart={cart} authToken={authToken} address={address}/>}></Route>
-              <Route path='/address' element={isLoggedIn ? <Address className="page__main" authToken={authToken} address={address} setAddress={setAddress}/> : <Navigate replace to="/" />}></Route>
-              <Route path='/success' element={isLoggedIn ? <Success className="page__main" setCart={setCart}/> : <Navigate replace to="/" />}></Route>
-              <Route path='/bookings' element={isLoggedIn ? <Bookings className="page__main" authToken={authToken}/> : <Navigate replace to="/" />}></Route>
-              <Route path='/booking-detail/:order_id' element={isLoggedIn ? <ClientBookingDetails className="page__main" authToken={authToken}/> : <Navigate replace to="/" />}></Route>
-              <Route path='/search' element={<Search className="page__main" products={products} cart={cart} setCart={setCart}/>}></Route>
+              {!isAdmin ?
+                <>
+                  <Route path='/' element={<Home className="page__main" cart={cart} setCart={setCartWrapper} products={products}/>}></Route>
+                  <Route path='/auth' element={!isLoggedIn ? <Auth className="page__main" setAuthToken={setAuthToken}/> : <Navigate replace to="/" />}></Route>
+                  <Route path='/activate/:id' element={<Activate className="page__main"/>}></Route>
+                  <Route path='/cart' element={<Cart className="page__main" cart={cart} setCart={setCartWrapper} products={products} isLoggedIn={isLoggedIn}/>}></Route>
+                  <Route path='/details' element={(!isLoggedIn || Object.keys(cart).length == 0) ? <Navigate replace to="/" /> : <Details className="page__main" cart={cart} authToken={authToken} address={address}/>}></Route>
+                  <Route path='/address' element={isLoggedIn ? <Address className="page__main" authToken={authToken} address={address} setAddress={setAddress}/> : <Navigate replace to="/" />}></Route>
+                  <Route path='/success' element={isLoggedIn ? <Success className="page__main" setCart={setCart}/> : <Navigate replace to="/" />}></Route>
+                  <Route path='/bookings' element={isLoggedIn ? <Bookings className="page__main" authToken={authToken}/> : <Navigate replace to="/" />}></Route>
+                  <Route path='/booking-detail/:order_id' element={isLoggedIn ? <ClientBookingDetails className="page__main" authToken={authToken}/> : <Navigate replace to="/" />}></Route>
+                  <Route path='/search' element={<Search className="page__main" products={products} cart={cart} setCart={setCart}/>}></Route>
+                </>
+                :
+                <Route path='/' element={<AdminBookings className="page__main" authToken={authToken}/>}></Route>
+              }
+              
               <Route path='/*' element={<Navigate replace to="/" />}></Route>
             </Routes>
             :
