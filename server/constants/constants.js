@@ -35,6 +35,9 @@ class CONSTANTS {
         USER: 0,
         ADMIN: 1
     }
+
+    static EARLIEST_DATE = moment('1970-01-01T18:30:00Z');
+    static LATEST_DATE = moment('2999-01-01T18:30:00Z');
 }
 
 module.exports = CONSTANTS;

@@ -160,7 +160,6 @@ function Details({ className, cart, authToken, address }) {
             }
         } else {
             res = await res.json();
-            console.log(res);
             if(res.for == "slot") {
                 setSlotBookingError(res.error);
             } else if (res.for == "page") {

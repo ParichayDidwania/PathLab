@@ -75,7 +75,6 @@ function Address({ className, authToken, address, setAddress }) {
                 setAddressMessage("Address Updated Successfully");
             }
         } else {
-            console.log(await res.json());
             setAddressError("Address Update Failed as the server is experiencing issues");
         }
     }

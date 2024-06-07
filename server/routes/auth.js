@@ -9,11 +9,12 @@ const CONSTANTS = require('../constants/constants');
 router.post('/register', async (req, res) => {
     try {
         const generatedLink = HelperClass.generateRandomString(40);
-        await UserModel.addUser(req.body, generatedLink);
         await AdminMailer.sendMail({
             subject: "PathLab Account Activation",
-            text: `Please click on the following link to activate your pathlab account ${process.env.WEBSITE_URL}/activate/${generatedLink}`
+            text: `Please click on the following link to activate your pathlab account ${process.env.WEBSITE_URL}/activate/${generatedLink}`,
+            email: req.body.email
         })
+        await UserModel.addUser(req.body, generatedLink);
         res.send({ message: "success" });
     } catch (err) {
         if(err.name === 'MongoServerError' && err.code === 11000) {

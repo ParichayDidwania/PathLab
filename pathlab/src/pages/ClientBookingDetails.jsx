@@ -51,7 +51,7 @@ function ClientBookingDetails({ className, authToken }) {
 
     let memberCount = 0;
     const members = data.members?.map((member) => {
-        itemCount++;
+        memberCount++;
         return (
             <li className="client-booking-details-main__item" key={`${id}-${memberCount}`}>{member.name}&emsp;({member.gender})</li>
         )

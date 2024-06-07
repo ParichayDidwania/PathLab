@@ -9,6 +9,15 @@ const mongoose = require('mongoose');
 const moment = require('moment');
 const CONSTANTS = require("../constants/constants");
 
+router.get('/slots', async(req, res) => {
+  const slots = await SlotFunction.checkAndCreateSlots();
+  const formattedSlots = SlotFunction.formatDate(slots);
+  res.send({ 
+      message: "success",
+      data: formattedSlots
+  })
+})
+
 router.get('/:start', async (req, res) => {
   const regex = new RegExp('^\\d+$');
   const start = req.params.start && regex.test(req.params.start) ? parseInt(req.params.start) : 0;
@@ -74,15 +83,6 @@ router.get('/order/:order_id', async (req, res) => {
     message: "success",
     data: order
   })
-})
-
-router.get('/slots', async(req, res) => {
-    const slots = await SlotFunction.checkAndCreateSlots();
-    const formattedSlots = SlotFunction.formatDate(slots);
-    res.send({ 
-        message: "success",
-        data: formattedSlots
-    })
 })
 
 router.post('/book', async(req, res) => {
@@ -179,7 +179,6 @@ router.post('/book', async(req, res) => {
         });
       } else {
         cashfreeCall = await cashfreeCall.json();
-        console.log(cashfreeCall);
         res.status(400).send({
           for: "page",
           error: "Payment gateway is down"

@@ -1,0 +1,134 @@
+.admin-booking-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.admin-booking-top {
+    display: flex;
+    flex-direction: column;
+}
+
+.admin-booking-order-id-span {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.admin-booking-order-id-value {
+    font-weight: bold;
+}
+
+.admin-booking-copy-order-id {
+    vertical-align: bottom;
+
+    margin-left: 0.25rem;
+
+    cursor: pointer;
+}
+
+.admin-booking-details-main__list {
+    padding: 0;
+
+    list-style-position: inside;
+}
+
+.admin-booking-details-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    border-top: 1px dashed black;
+    padding-top: 0.5rem;
+}
+
+.admin-booking-details-span {
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.admin-booking-quantity-x {
+    vertical-align: top;
+
+    font-weight: bold;
+    font-size: 0.8rem;
+}
+
+.admin-booking-list {
+    padding: 0;
+    list-style-position: inside;
+}
+
+.admin-booking-amount-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.admin-booking-address-view {
+    border-top: 1px dashed black;
+    padding-top: 0.5rem;
+}
+
+.admin-booking-status-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: start;
+
+    border-top: 1px dashed black;
+    padding-top: 0.5rem;
+}
+
+.admin-booking-status-value {
+    color: green;
+
+    font-weight: bold;
+}
+
+.admin-booking-status-control-wrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+
+.admin-booking-status-control {
+    align-self: flex-start;
+
+    border: none;
+    padding: 0.1rem 0.5rem;
+
+    background-color: #ffcc29;
+    color: black;
+
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 1rem;
+}
+
+.admin-booking-status-control:hover:enabled {
+    background-color: #d1a61a;
+}
+
+.admin-booking-status-control--disabled {
+    opacity: 0.6;
+
+    cursor: initial;
+}
+
+@media (min-width: 40rem) {
+    .admin-booking-top {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .admin-booking-status-wrapper {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .admin-booking-status-control-wrapper {
+        justify-content: initial;
+        gap: 1rem;
+    }
+}

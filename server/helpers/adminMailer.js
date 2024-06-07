@@ -13,10 +13,10 @@ class AdminMailer {
         });
     }
 
-    static async sendMail({subject, text}) {
+    static async sendMail({subject, text, email}) {
         const mailOptions = {
             from: 'parichaydidwaniatest@gmail.com',
-            to: 'parichaydidwania@gmail.com',
+            to: email,
             subject: subject,
             text: text
         };

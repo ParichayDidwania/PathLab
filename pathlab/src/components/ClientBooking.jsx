@@ -48,6 +48,7 @@ function ClientBooking({ className, order_id, date, time, products, amount, stat
                 <div className="client-booking-status-control-wrapper">
                     <Link className="client-booking-status-control" to={`/booking-detail/${order_id}`}>Order Details</Link>
                     <button className={`client-booking-status-control ${isDownloadDisabled && "client-booking-status-control--disabled"}`} disabled={isDownloadDisabled}>Download Report</button>
+                    {/* TODO: DOWNLOAD FUNCTIONALITY */}
                 </div>
             </div>
         </div>
