@@ -16,6 +16,7 @@ import Bookings from './pages/Bookings';
 import ClientBookingDetails from './pages/ClientBookingDetails';
 import Search from './pages/Search';
 import AdminBookings from './pages/AdminBookings';
+import AdminBookingsCompleted from './pages/AdminBookingsCompleted';
 // import Download from './components/Download';
 
 function App() {
@@ -129,7 +130,10 @@ function App() {
                   <Route path='/search' element={<Search className="page__main" products={products} cart={cart} setCart={setCart}/>}></Route>
                 </>
                 :
-                <Route path='/' element={<AdminBookings className="page__main" authToken={authToken}/>}></Route>
+                <>
+                  <Route path='/' element={<AdminBookings className="page__main" authToken={authToken}/>}></Route>
+                  <Route path='/completed' element={<AdminBookingsCompleted className="page__main" authToken={authToken}/>}></Route>
+                </>
               }
               
               <Route path='/*' element={<Navigate replace to="/" />}></Route>

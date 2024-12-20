@@ -3,6 +3,7 @@ const CONSTANTS = require('../constants/constants');
 
 const OrderSchema = new mongoose.Schema({
     user_id: { type: mongoose.Types.ObjectId, index: true },
+    file_id: { type: mongoose.Types.ObjectId, index: true },
     counter: { type: Number },
     products: {},
     amount: { type: Number },
@@ -40,10 +41,12 @@ class OrderModelClass {
         return await OrderModel.find({ user_id: user_id, status: { $gte: CONSTANTS.ORDER_STATUS.BOOKED } }).skip(skip).limit(limit).sort({ _id: -1 });
     }
 
-    static async fetchOrdersForAdmin(skip, limit, start_date, end_date) {
+    static async fetchOrdersForAdmin(skip, limit, start_date, end_date, isCompleted) {
+        let status = isCompleted ? CONSTANTS.ORDER_STATUS.COMPLETED : { $gte: CONSTANTS.ORDER_STATUS.BOOKED, $lt: CONSTANTS.ORDER_STATUS.COMPLETED };
+
         return await OrderModel.find(
             { 
-                status: { $gte: CONSTANTS.ORDER_STATUS.BOOKED, $lt: CONSTANTS.ORDER_STATUS.COMPLETED },
+                status: status,
                 createdAt: { $gte: start_date, $lte: end_date }
             }).skip(skip).limit(limit).sort({ _id: -1 }).exec();
     }
@@ -51,12 +54,23 @@ class OrderModelClass {
     static async fetchOrdersForAdminByOrderId(order_id) {
         return await OrderModel.find(
             { 
-                _id: order_id
+                _id: order_id,
             }).exec();
     }
 
-    static async fetchOrderCountForAdmin() {
-        return await OrderModel.countDocuments({ status: { $gte: CONSTANTS.ORDER_STATUS.BOOKED, $lt: CONSTANTS.ORDER_STATUS.COMPLETED } }).exec();
+    static async fetchOrdersForAdminByOrderIdWithCompleted(order_id, isCompleted) {
+        let status = isCompleted ? CONSTANTS.ORDER_STATUS.COMPLETED : { $gte: CONSTANTS.ORDER_STATUS.BOOKED, $lt: CONSTANTS.ORDER_STATUS.COMPLETED };
+
+        return await OrderModel.find(
+            { 
+                _id: order_id,
+                status: status
+            }).exec();
+    }
+
+    static async fetchOrderCountForAdmin(isCompleted) {
+        let status = isCompleted ? CONSTANTS.ORDER_STATUS.COMPLETED : { $gte: CONSTANTS.ORDER_STATUS.BOOKED, $lt: CONSTANTS.ORDER_STATUS.COMPLETED };
+        return await OrderModel.countDocuments({ status: status }).exec();
     }
 
     static async fetchOrderByUserAndId(user_id, order_id) {
@@ -73,6 +87,10 @@ class OrderModelClass {
 
     static async updateStatusToBooked(order_id) {
         await OrderModel.updateOne({ _id: order_id }, { $set: { status: CONSTANTS.ORDER_STATUS.BOOKED }, $unset: { expiresAt: "" } });
+    }
+
+    static async updateStatusAndFileId(order_id, status, file_id) {
+        await OrderModel.updateOne({ _id: order_id }, { $set: { status: status, file_id: file_id } });
     }
 }
 

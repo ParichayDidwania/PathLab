@@ -6,7 +6,7 @@ import AdminBooking from "../components/AdminBooking"
 import { useEffect, useId, useState } from "react";
 import CONSTANTS from "../helpers/constants";
 
-function AdminBookings({ className, authToken }) {
+function AdminBookingsCompleted({ className, authToken }) {
 
     const [bookingData, setBookingData] = useState([]);
     const [start, setStart] = useState(0);
@@ -19,7 +19,7 @@ function AdminBookings({ className, authToken }) {
     const id = useId();
 
     async function fetchBookings(start, order_id, start_date, end_date) {
-        let res = await fetch(`${import.meta.env.VITE_URL}/admin/bookings/${start}?order_id=${order_id}&start_date=${start_date}&end_date=${end_date}`, {
+        let res = await fetch(`${import.meta.env.VITE_URL}/admin/bookings/${start}?order_id=${order_id}&start_date=${start_date}&end_date=${end_date}&isCompleted=true`, {
             method: "GET",
             headers: {
                 'x-auth-token': authToken
@@ -79,12 +79,39 @@ function AdminBookings({ className, authToken }) {
         }
     }
 
+    async function downloadOrder(order_id) {
+        let res = await fetch(`${import.meta.env.VITE_URL}/admin/bookings/download/${order_id}`, {
+            method: "GET",
+            headers: {
+                'x-auth-token': authToken
+            }
+        });
+
+        if(res.status === 200) {
+            const contentDisposition = res.headers.get('Content-Disposition');
+            const fileName = contentDisposition.split('=')[1];
+
+            res = await res.blob();
+            const url = window.URL.createObjectURL(res);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = fileName;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+        } else {
+            res = await res.json();
+            window.alert(res.message);
+        }
+    }
+
     let count = 0;
     const bookings = bookingData.map((bookingData) => {
         count++;
         return(
             <li key={`${id}-${count}-${bookingData.order_id}`} className="admin-booking-main__item">
-                <AdminBooking {...bookingData} saveOrder={saveOrder}/>
+                <AdminBooking is_completed={true} {...bookingData} saveOrder={saveOrder} downloadOrder={downloadOrder}/>
             </li>
         )
     })
@@ -102,4 +129,4 @@ function AdminBookings({ className, authToken }) {
     )
 }
 
-export default AdminBookings
+export default AdminBookingsCompleted

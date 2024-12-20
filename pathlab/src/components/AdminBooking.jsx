@@ -3,9 +3,12 @@ import copy from "../assets/copy.png";
 import { useId } from "react";
 import AddressView from "./AddressView";
 import CONSTANTS from "../helpers/constants";
+import { useState } from "react";
 
-function AdminBooking({ className, order_id, date, time, products, amount, members, address, status }) {
+function AdminBooking({ is_completed = false, className, order_id, date, time, products, amount, members, address, status, saveOrder, downloadOrder }) {
     const id = useId();
+    const [statusValue, setStatusValue] = useState(status);
+    const [file, setFile] = useState(null);
 
     function copyToClipboard() {
         navigator.clipboard.writeText(order_id);
@@ -62,12 +65,21 @@ function AdminBooking({ className, order_id, date, time, products, amount, membe
             <AddressView className="admin-booking-address-view" address={address}/>
             <div className="admin-booking-status-wrapper">
                 <div className="admin-booking-status-control-wrapper">
-                    <select id="status" name="status" defaultValue={status}>
+                    <select id="status" name="status" value={statusValue} onChange={(e) => { setStatusValue(e.target.value)} } disabled={is_completed}>
                         {orderStatusOptions}
                     </select>
-                    <button className={`admin-booking-status-control`} >Upload Report</button> {/* TODO: FUNCTIONALITY */}
+                    <input type="file" accept=".pdf" onChange={(e) => { setFile(e.target.files[0])}}/>
                 </div>
-                <button className={`admin-booking-status-control`} >Save</button> {/* TODO: FUNCTIONALITY */}
+                <div className="admin-booking-status-control-wrapper">
+                    {is_completed && 
+                        <button className={`admin-booking-status-control`} onClick={() => {
+                            downloadOrder(order_id);
+                        }}>Download Report</button>
+                    }
+                    <button className={`admin-booking-status-control`} onClick={() => {
+                        saveOrder(order_id, parseInt(statusValue), file);
+                    }}>Save</button>
+                </div>
             </div>
         </div>
     );

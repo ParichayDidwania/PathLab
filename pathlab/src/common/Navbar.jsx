@@ -25,7 +25,7 @@ function Navbar({ className, isAdmin }) {
                     :
                     <>
                         <li className="nav__item"><Link className={`nav__link ${location.pathname === '/' && "nav__link--opened"}`} to="/" onClick={forceLooseFocus}>Active Bookings</Link></li>
-                        <li className="nav__item"><Link className={`nav__link ${location.pathname === '/completed' && "nav__link--opened"}`} to="/" onClick={forceLooseFocus}>Completed Bookings</Link></li>
+                        <li className="nav__item"><Link className={`nav__link ${location.pathname === '/completed' && "nav__link--opened"}`} to="/completed" onClick={forceLooseFocus}>Completed Bookings</Link></li>
                     </>
                 }
                 

@@ -29,7 +29,8 @@ async function start() {
     AdminMailer.init();
     ProductCatalogue.init();
     app.use(cors({
-        origin:  "*"
+        origin:  "*",
+        exposedHeaders: ['Content-Disposition']
     }))
 
     app.use('/', home);
