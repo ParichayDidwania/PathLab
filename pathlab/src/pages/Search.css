@@ -12,3 +12,27 @@
     padding: 1rem 1rem;
     width: 100%;
 }
+
+.search-span-no-result {
+    margin-top: 1rem;
+
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+.search-button-show-more {
+    align-self: center;
+
+    margin: 0.25rem;
+    margin-bottom: 0.5rem;
+    border: 1px solid black;
+    padding: 0.5rem 2rem;
+
+    background-color: #ffcc29;
+    color: black;
+
+    cursor: pointer;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1rem;
+}

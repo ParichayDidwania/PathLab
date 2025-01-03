@@ -62,11 +62,11 @@
 
 .search-form__submit-button {
     position: absolute;
-    right: -3%;
+    right: -10px;
     top: -13%;
 
     border: none;
-    border-radius: 100px;
+    border-radius: 20px;
     padding: 0.3rem 0.5rem;
 
     color: #004368;
