@@ -17,6 +17,7 @@ import ClientBookingDetails from './pages/ClientBookingDetails';
 import Search from './pages/Search';
 import AdminBookings from './pages/AdminBookings';
 import AdminBookingsCompleted from './pages/AdminBookingsCompleted';
+import TestDetail from './pages/TestDetail';
 // import Download from './components/Download';
 
 function App() {
@@ -128,6 +129,7 @@ function App() {
                   <Route path='/bookings' element={isLoggedIn ? <Bookings className="page__main" authToken={authToken}/> : <Navigate replace to="/" />}></Route>
                   <Route path='/booking-detail/:order_id' element={isLoggedIn ? <ClientBookingDetails className="page__main" authToken={authToken}/> : <Navigate replace to="/" />}></Route>
                   <Route path='/search' element={<Search className="page__main" products={products} cart={cart} setCart={setCart}/>}></Route>
+                  <Route path='/test/:test_id' element={<TestDetail cart={cart} setCart={setCartWrapper}/>}></Route>
                 </>
                 :
                 <>

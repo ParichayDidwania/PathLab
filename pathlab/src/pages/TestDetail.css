@@ -1,0 +1,55 @@
+.test-detail-main {
+    display: flex;
+    flex-direction: column;
+
+    padding-top: 1rem;
+}
+
+.test-detail-error-span {
+    text-align: center;
+    font-size: 1.5rem;
+}
+
+.test-detail-info-wrapper {
+    display: flex;
+    flex-direction: column;
+
+    margin-left: 15%;
+    margin-right: 15%;
+    padding: 1rem;
+
+    background-color: #8883832b;
+}
+
+.test-detail-title-price-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    margin-bottom: 2rem;
+}
+
+.test-detail-title-h1 {
+    color: #004368;
+}
+
+.title-detail-price {
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.test-detail-description-tag-span {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 1.2rem;
+}
+
+.test-detail-description-para {
+    margin-top: 1rem;
+}
+
+.test-detail__add-to-cart {
+    align-self: center;
+
+    margin-top: 2rem;
+    width: 25%;
+}
