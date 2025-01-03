@@ -4,7 +4,7 @@ import { useId } from "react";
 import CONSTANTS from "../helpers/constants";
 import { Link } from "react-router-dom";
 
-function ClientBooking({ className, order_id, date, time, products, amount, status, isDownloadDisabled = true }) {
+function ClientBooking({ className, order_id, date, time, products, amount, status, isDownloadDisabled = true, downloadOrder }) {
     const id = useId();
 
     function copyToClipboard() {
@@ -47,8 +47,7 @@ function ClientBooking({ className, order_id, date, time, products, amount, stat
                 </span>
                 <div className="client-booking-status-control-wrapper">
                     <Link className="client-booking-status-control" to={`/booking-detail/${order_id}`}>Order Details</Link>
-                    <button className={`client-booking-status-control ${isDownloadDisabled && "client-booking-status-control--disabled"}`} disabled={isDownloadDisabled}>Download Report</button>
-                    {/* TODO: DOWNLOAD FUNCTIONALITY */}
+                    <button className={`client-booking-status-control ${isDownloadDisabled && "client-booking-status-control--disabled"}`} disabled={isDownloadDisabled} onClick={() => { downloadOrder(order_id) }}>Download Report</button>
                 </div>
             </div>
         </div>

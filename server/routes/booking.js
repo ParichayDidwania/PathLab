@@ -18,6 +18,28 @@ router.get('/slots', async(req, res) => {
   })
 })
 
+router.get('/download/:order_id', async (req, res) => {
+  const order_id = req.params.order_id;
+  const orderDoc = await OrderModel.fetchOrderByUserAndId(req.user._id, order_id);
+  if(!orderDoc) {
+    return res.status(400).send({ error: "This order Id does not exist for this account" });
+  }
+  
+  const file_id = orderDoc.file_id;
+  if(file_id) {
+      const bucket = new mongoose.mongo.GridFSBucket(mongoose.connection.db, { bucketName: 'reports' });
+      const fileDocs = await bucket.find({ _id: file_id }).toArray();
+      const fileName = fileDocs[0].filename;
+
+      res.setHeader('Content-Disposition', 'attachment; filename=' + fileName);
+      res.setHeader('Content-Type', 'application/pdf');
+
+      bucket.openDownloadStream(file_id).pipe(res);
+  } else {
+      res.status(400).send({ message: "File not found" });
+  }
+})
+
 router.get('/:start', async (req, res) => {
   const regex = new RegExp('^\\d+$');
   const start = req.params.start && regex.test(req.params.start) ? parseInt(req.params.start) : 0;
@@ -36,7 +58,8 @@ router.get('/:start', async (req, res) => {
       date: moment(orderDoc.date).format("MMMM DD, YYYY"),
       time: orderDoc.time,
       amount: orderDoc.amount,
-      status: orderDoc.status
+      status: orderDoc.status,
+      file_id: orderDoc.file_id
     })
   }
 

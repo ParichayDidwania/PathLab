@@ -20,6 +20,7 @@ router.get('/bookings/download/:order_id', async (req, res) => {
             const fileName = fileDocs[0].filename;
 
             res.setHeader('Content-Disposition', 'attachment; filename=' + fileName);
+            res.setHeader('Content-Type', 'application/pdf');
 
             bucket.openDownloadStream(file_id).pipe(res);
         } else {

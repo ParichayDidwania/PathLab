@@ -25,6 +25,33 @@ function Bookings({className, authToken}) {
         }
     }
 
+    async function downloadOrder(order_id) {
+        let res = await fetch(`${import.meta.env.VITE_URL}/booking/download/${order_id}`, {
+            method: "GET",
+            headers: {
+                'x-auth-token': authToken
+            }
+        });
+
+        if(res.status === 200) {
+            const contentDisposition = res.headers.get('Content-Disposition');
+            const fileName = contentDisposition.split('=')[1];
+
+            res = await res.blob();
+            const url = window.URL.createObjectURL(res);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = fileName;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+        } else {
+            res = await res.json();
+            window.alert(res.message);
+        }
+    }
+
     useEffect(() => {
         fetchBookings(0);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -35,7 +62,7 @@ function Bookings({className, authToken}) {
         count++;
         return(
             <li key={`${id}-${count}`} className="booking-main__item">
-                <ClientBooking {...bookingData}/>
+                <ClientBooking {...bookingData} isDownloadDisabled={bookingData.file_id ? false : true} downloadOrder={downloadOrder}/>
             </li>
         )
     })
